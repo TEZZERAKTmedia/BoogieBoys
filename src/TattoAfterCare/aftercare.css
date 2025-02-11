@@ -3,50 +3,53 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-  }
-  
-  html, body {
+}
+
+html, body {
     height: 100%;
     font-family: 'Orbitron', sans-serif;
     background-color: #f4f4f4;
     color: #333;
-    overflow: hidden;
-  }
-  
-  /* Grid container */
-  .tutorial-grid {
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    overflow-y: auto; /* Allow scrolling if needed */
+}
+
+/* Grid container */
+.tutorial-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(50%, 1fr)); /* Ensures at least 2 columns */
     gap: 20px;
     padding: 20px;
-   
     margin: 0 auto;
-    height: 100vh;
-  }
-
+    min-height: 100vh; /* Ensures full height */
+    justify-content: center;
+}
 
 /* Media Queries */
+@media (max-width: 480px) {  /* Smallest screens */
+    .tutorial-grid {
+        grid-template-columns: repeat(2, 1fr); /* Forces exactly 2 columns */
+    }
+}
 
-/* For screens wider than 768px (e.g., tablets in landscape mode and small desktops) */
 @media (min-width: 768px) {
     .tutorial-grid {
-      margin-top: 20%;
+        margin-top: 20%;
     }
-  }
-  
-  /* For screens wider than 1024px (e.g., standard desktops) */
-  @media (min-width: 1024px) {
+}
+
+@media (min-width: 1024px) {
     .tutorial-grid {
-      margin-top: 20%;
+        margin-top: 20%;
     }
-  }
-  
-  /* For screens wider than 1440px (e.g., large desktops and monitors) */
-  @media (min-width: 1440px) {
+}
+
+@media (min-width: 1440px) {
     .tutorial-grid {
-      margin-top: 20%;
+        margin-top: 20%;
     }
-  }
+}
+
   
   /* Card styling */
   .card {
