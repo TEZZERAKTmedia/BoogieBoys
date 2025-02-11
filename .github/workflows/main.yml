@@ -27,3 +27,4 @@ jobs:
           source: "dist/**"
           target: "/home/trentynnicholas-boogieboys/htdocs/boogieboys.trentynnicholas.com/"
           strip_components: 0
+          rm: true
