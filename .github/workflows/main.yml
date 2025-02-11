@@ -25,7 +25,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           source: "dist/*"
-          target: "/home/thrivepersonollogy/htdocs/portfolio.thrivepersonollogy.trentynnicholas.com/"
+          target: "/home/trentynnicholas-boogieboys/htdocs/boogieboys.trentynnicholas.com/"
           strip_components: 3
           rm: true
 
