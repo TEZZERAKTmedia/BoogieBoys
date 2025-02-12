@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './aftercare.css';
 import WashGif from '../assets/Wash.gif';
 import SoapGif from '../assets/Soap.gif';
@@ -18,6 +18,20 @@ const slides = [
 
 const TutorialSlideshow = () => {
   const [flippedIndices, setFlippedIndices] = useState([]);
+  const [showButton, setShowButton] = useState(true);
+
+  // Set up an interval to show the back button every 20 seconds.
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShowButton(true);
+      // Hide the button after 7 seconds (adjust this value if needed)
+      setTimeout(() => {
+        setShowButton(false);
+      }, 7000);
+    }, 20000); // Every 20 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   const handleClick = (index) => {
     setFlippedIndices((prev) =>
@@ -26,10 +40,9 @@ const TutorialSlideshow = () => {
   };
 
   return (
-    <div>
+    <div className="app-container">
       <header className="header">
         <h1 className="title">Tattoo Aftercare</h1>
-        <a href="https://boogieboys.one" className="close-button" aria-label="Close">×</a>
       </header>
       <div className="tutorial-grid">
         {slides.map((slide, index) => (
@@ -41,7 +54,11 @@ const TutorialSlideshow = () => {
           >
             <div className="card-inner">
               <div className="card-front">
-                <img src={slide.image} alt={`Slide ${index + 1}`} className="slide-image" />
+                <img
+                  src={slide.image}
+                  alt={`Slide ${index + 1}`}
+                  className="slide-image"
+                />
                 <div className="slide-number">{index + 1}</div>
               </div>
               <div className="card-back">
@@ -52,6 +69,15 @@ const TutorialSlideshow = () => {
           </div>
         ))}
       </div>
+      {showButton && (
+        <a
+          href="https://boogieboys.one"
+          className="back-button"
+          aria-label="Back to BoogieBoys"
+        >
+          <span className="back-button-text">Back to BoogieBoys</span>
+        </a>
+      )}
     </div>
   );
 };

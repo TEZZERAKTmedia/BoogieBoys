@@ -8,20 +8,3 @@ body {
   font-weight: normal;
   font-style: normal;
 }
-.header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 15vh;
-  background-color: #000000cd;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-}
-
-.title {
-  font-family: 'Dancing Script', cursive;
-  font-size: 2.5rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #dedede;
-}
