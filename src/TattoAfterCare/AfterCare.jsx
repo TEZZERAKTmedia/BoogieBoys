@@ -18,7 +18,7 @@ const slides = [
 
 const TutorialSlideshow = () => {
   const [flippedIndices, setFlippedIndices] = useState([]);
-  const [showButton, setShowButton] = useState(true);
+  const [showButton, setShowButton] = useState(false);
 
   // Set up an interval to show the back button every 20 seconds.
   useEffect(() => {
