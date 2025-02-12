@@ -16,14 +16,16 @@ html, body {
 
 /* Grid container */
 .tutorial-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(50%, 1fr)); /* Ensures at least 2 columns */
-    gap: 20px;
-    padding: 20px;
-    margin: 0 auto;
-    min-height: 100vh; /* Ensures full height */
-    justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  column-gap: 20px;
+  row-gap: 10px; /* Reduced row gap */
+  padding: 20px;
+  margin: 0 auto;
+  min-height: 90vh;
+  justify-content: center;
 }
+
 
 /* Media Queries */
 @media (max-width: 480px) {  /* Smallest screens */
@@ -34,19 +36,22 @@ html, body {
 
 @media (min-width: 768px) {
     .tutorial-grid {
-        margin-top: 20%;
+        margin-top: 0%;
+        grid-template-columns: repeat(4, 1fr); 
     }
 }
 
 @media (min-width: 1024px) {
     .tutorial-grid {
         margin-top: 20%;
+        grid-template-columns: repeat(5, 1fr); 
     }
 }
 
 @media (min-width: 1440px) {
     .tutorial-grid {
         margin-top: 20%;
+        grid-template-columns: repeat(6, 1fr); 
     }
 }
 
@@ -134,5 +139,23 @@ html, body {
     100% {
       transform: rotateY(0deg);
     }
+  }
+  .close-button {
+    position: absolute;
+    right: 10%;
+    top: 7%;
+    transform: translateY(-50%);
+    font-size: 5rem;
+    text-decoration: none;
+    color: #ffffff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    z-index: 9999;
+  }
+  
+  .close-button:hover {
+    color: #ff0000;
   }
   

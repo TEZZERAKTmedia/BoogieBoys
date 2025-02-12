@@ -7,7 +7,8 @@ function App() {
 
   return (
     <>
-      <div>
+      <div >
+        
         <AfterCare />
       </div>
     </>

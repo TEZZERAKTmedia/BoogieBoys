@@ -26,26 +26,32 @@ const TutorialSlideshow = () => {
   };
 
   return (
-    <div className="tutorial-grid">
-      {slides.map((slide, index) => (
-        <div
-          key={index}
-          className={`card ${flippedIndices.includes(index) ? 'flipped' : ''}`}
-          style={{ '--card-index': index }}
-          onClick={() => handleClick(index)}
-        >
-          <div className="card-inner">
-            <div className="card-front">
-              <img src={slide.image} alt={`Slide ${index + 1}`} className="slide-image" />
-              <div className="slide-number">{index + 1}</div>
-            </div>
-            <div className="card-back">
-            <div className="slide-number">{index + 1}</div>
-              <div className="slide-text">{slide.text}</div>
+    <div>
+      <header className="header">
+        <h1 className="title">Tattoo Aftercare</h1>
+        <a href="https://boogieboys.one" className="close-button" aria-label="Close">×</a>
+      </header>
+      <div className="tutorial-grid">
+        {slides.map((slide, index) => (
+          <div
+            key={index}
+            className={`card ${flippedIndices.includes(index) ? 'flipped' : ''}`}
+            style={{ '--card-index': index }}
+            onClick={() => handleClick(index)}
+          >
+            <div className="card-inner">
+              <div className="card-front">
+                <img src={slide.image} alt={`Slide ${index + 1}`} className="slide-image" />
+                <div className="slide-number">{index + 1}</div>
+              </div>
+              <div className="card-back">
+                <div className="slide-number">{index + 1}</div>
+                <div className="slide-text">{slide.text}</div>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
