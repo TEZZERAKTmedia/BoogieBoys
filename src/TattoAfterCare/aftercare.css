@@ -10,8 +10,14 @@ html, body {
   font-family: 'Orbitron', sans-serif;
   background-color: #bebebe;
   color: #333;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
-  overflow-y: auto;   /* Allow vertical scrolling if needed */
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Dark mode styles */
+.dark-mode {
+  background-color: #222;
+  color: #ddd;
 }
 
 /* App container */
@@ -28,10 +34,16 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+  background-color: rgba(255, 255, 255, 0.9);
   z-index: 10;
   padding: 10px 0;
-  font-family: 'Dancing Script';
+  font-family: 'Dancing Script', cursive;
+}
+
+/* When dark mode is active, assume the parent (like .app-container) gets a dark-mode class */
+.app-container.dark-mode .header {
+  background-color: rgba(0, 0, 0, 0.9); /* or any dark background */
+  color: #fff; /* adjust text color if needed */
 }
 
 .title {
@@ -39,6 +51,10 @@ html, body {
   text-transform: uppercase;
   letter-spacing: 2px;
   color: #333;
+}
+.app-container.dark-mode .title {
+  background-color: rgba(0, 0, 0, 0.9); /* or any dark background */
+  color: #b6b6b6; /* adjust text color if needed */
 }
 
 /* Tutorial grid styling */
@@ -54,7 +70,7 @@ html, body {
 }
 
 /* Media Queries */
-@media (max-width: 480px) {  
+@media (max-width: 480px) {
   .tutorial-grid {
     padding-top: 20%;
     grid-template-columns: repeat(2, 1fr);
@@ -63,15 +79,21 @@ html, body {
 
 @media (min-width: 768px) {
   .tutorial-grid {
-    margin-top: 0;
-    grid-template-columns: repeat(4, 1fr);
+    margin-top: 5%;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .header{
+    margin-top: -5%;
   }
 }
 
 @media (min-width: 1024px) {
   .tutorial-grid {
     margin-top: 20%;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .header{
+    margin-top: -10%;
   }
 }
 
@@ -79,10 +101,9 @@ html, body {
   .tutorial-grid {
     margin-top: 10%;
     grid-template-columns: repeat(6, 1fr);
-    
   }
-  .header {
-    margin-top: -10%;
+  .header{
+    margin-top: -5%;
   }
 }
 
@@ -95,7 +116,7 @@ html, body {
 .card-inner {
   position: relative;
   width: 100%;
-  padding-top: 100%; /* Maintains aspect ratio */
+  padding-top: 100%; /* Maintains square aspect ratio */
   transform-style: preserve-3d;
   transition: transform 0.5s;
   animation: flipAnimation 18s linear infinite;
@@ -123,15 +144,23 @@ html, body {
 }
 
 .card-front {
-  background-color: #fff;
+  background-color: #ffffff93;
+}
+.app-container.dark-mode .card-front {
+  background-color: rgba(14, 13, 13, 0.344); /* or any dark background */
+  color: #fff; /* adjust text color if needed */
 }
 
 .card-back {
-  background-color: #333;
+  background-color: #333333bb;
   color: #fff;
   transform: rotateY(180deg);
   padding: 10px;
   text-align: center;
+}
+.app-container.dark-mode .card-back {
+  background-color: rgba(181, 181, 181, 0.575); /* or any dark background */
+  color: #1f1f1f; /* adjust text color if needed */
 }
 
 /* Slide image styling */
@@ -178,24 +207,25 @@ html, body {
   right: 20px;
   background-color: #333;
   color: #fff;
-  padding: 10px 20px;
+  padding: 10px;
   border: none;
   width: 50px; /* Start as a small circle */
+  height: 75px;
   border-radius: 50%;
   text-decoration: none;
   font-size: 1rem;
   font-weight: bold;
-  opacity: 0;
   overflow: hidden;
-  
   z-index: 100;
-  /* Composite animation: 
-     - "appear": fade in
-     - "expand": expand to full width and change border-radius,
-     - "contract": shrink back,
-     - "disappear": fade out.
-  */
-  animation: backButtonAnimation 7s linear forwards;
+  cursor: pointer;
+  transition: width 0.5s ease, border-radius 0.5s ease;
+  /* Animate in/out: total cycle = 7s */
+  animation: backButtonAnimation 7s linear infinite;
+}
+
+.app-container.dark-mode .back-button {
+  background-color: rgba(0, 0, 0, 0.499); /* or any dark background */
+  color: #cfcfcf; /* adjust text color if needed */
 }
 
 @keyframes backButtonAnimation {
@@ -204,7 +234,7 @@ html, body {
     border-radius: 50%;
     opacity: 0;
   }
-  14.3% { /* After 1 second */
+  14.3% { /* After 1s of 7s */
     width: 220px;
     border-radius: 25px;
     opacity: 1;
@@ -221,13 +251,14 @@ html, body {
   }
 }
 
+/* Back button text animation */
 .back-button-text {
   opacity: 0;
-  
   display: inline-block;
   white-space: nowrap;
   transform: scale(0.8);
-  animation: backButtonTextAnimation 7s linear forwards;
+  transition: opacity 0.5s ease 0.5s;
+  margin-left: 10px;
 }
 
 @keyframes backButtonTextAnimation {
@@ -247,4 +278,21 @@ html, body {
     opacity: 0;
     transform: scale(0.8);
   }
+}
+
+/* Apply text animation to the text inside the back button */
+.back-button .back-button-text {
+  animation: backButtonTextAnimation 7s linear infinite;
+}
+
+/* Dark mode toggle inside the back button */
+.dark-mode-toggle {
+  margin-left: 15px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.dark-mode-toggle:hover {
+  transform: scale(1.1);
 }

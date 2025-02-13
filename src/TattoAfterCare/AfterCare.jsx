@@ -19,28 +19,35 @@ const slides = [
 const TutorialSlideshow = () => {
   const [flippedIndices, setFlippedIndices] = useState([]);
   const [showButton, setShowButton] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
-  // Set up an interval to show the back button every 20 seconds.
+  // Every 20 seconds, show the back-button for 7 seconds.
   useEffect(() => {
     const interval = setInterval(() => {
       setShowButton(true);
-      // Hide the button after 7 seconds (adjust this value if needed)
-      setTimeout(() => {
+      const hideTimeout = setTimeout(() => {
         setShowButton(false);
       }, 7000);
-    }, 7000); // Every 20 seconds
-
+      return () => clearTimeout(hideTimeout);
+    }, 20000);
     return () => clearInterval(interval);
   }, []);
 
-  const handleClick = (index) => {
+  const handleCardClick = (index) => {
     setFlippedIndices((prev) =>
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
     );
   };
 
+  const handleDarkModeToggle = (e) => {
+    // Prevent the anchor link navigation when clicking the toggle
+    e.stopPropagation();
+    e.preventDefault();
+    setIsDarkMode((prev) => !prev);
+  };
+
   return (
-    <div className="app-container">
+    <div className={`app-container ${isDarkMode ? 'dark-mode' : ''}`}>
       <header className="header">
         <h1 className="title">Tattoo Aftercare</h1>
       </header>
@@ -50,7 +57,7 @@ const TutorialSlideshow = () => {
             key={index}
             className={`card ${flippedIndices.includes(index) ? 'flipped' : ''}`}
             style={{ '--card-index': index }}
-            onClick={() => handleClick(index)}
+            onClick={() => handleCardClick(index)}
           >
             <div className="card-inner">
               <div className="card-front">
@@ -76,6 +83,13 @@ const TutorialSlideshow = () => {
           aria-label="Back to BoogieBoys"
         >
           <span className="back-button-text">Back to BoogieBoys</span>
+          <span
+            className="dark-mode-toggle"
+            onClick={handleDarkModeToggle}
+            aria-label="Toggle Dark Mode"
+          >
+            {isDarkMode ? '☀' : '🌙'}
+          </span>
         </a>
       )}
     </div>
