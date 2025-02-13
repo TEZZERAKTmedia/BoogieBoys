@@ -24,15 +24,11 @@ const TutorialSlideshow = () => {
   // Every 20 seconds, show the back-button for 7 seconds.
   useEffect(() => {
     const interval = setInterval(() => {
-      setShowButton(true);
-      const hideTimeout = setTimeout(() => {
-        setShowButton(false);
-      }, 7000);
-      return () => clearTimeout(hideTimeout);
-    }, 20000);
+      setShowButton(prev => !prev);
+    }, 7000);
     return () => clearInterval(interval);
   }, []);
-
+  
   const handleCardClick = (index) => {
     setFlippedIndices((prev) =>
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]

@@ -14,11 +14,13 @@ html, body {
   overflow-y: auto;
 }
 
+
 /* Dark mode styles */
 .dark-mode {
   background-color: #222;
   color: #ddd;
 }
+
 
 /* App container */
 .app-container {
@@ -210,7 +212,7 @@ html, body {
   padding: 10px;
   border: none;
   width: 50px; /* Start as a small circle */
-  height: 75px;
+  height: 100px;
   border-radius: 50%;
   text-decoration: none;
   font-size: 1rem;
@@ -258,7 +260,8 @@ html, body {
   white-space: nowrap;
   transform: scale(0.8);
   transition: opacity 0.5s ease 0.5s;
-  margin-left: 10px;
+ 
+  padding: 10px
 }
 
 @keyframes backButtonTextAnimation {
@@ -291,7 +294,15 @@ html, body {
   cursor: pointer;
   font-size: 1.2rem;
   transition: transform 0.3s ease;
+  border: 2px solid white;
+  border-radius: 50%;
+  padding: 5px;
 }
+.app-container.dark-mode .dark-mode-toggle {
+  background-color: rgba(255, 255, 255, 0.829); /* or any dark background */
+  color: #161616; /* adjust text color if needed */
+}
+
 
 .dark-mode-toggle:hover {
   transform: scale(1.1);
