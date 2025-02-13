@@ -28,7 +28,7 @@ const TutorialSlideshow = () => {
       setTimeout(() => {
         setShowButton(false);
       }, 7000);
-    }, 20000); // Every 20 seconds
+    }, 7000); // Every 20 seconds
 
     return () => clearInterval(interval);
   }, []);
