@@ -1,0 +1,277 @@
+/* General Navbar Styling */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  background-color: var(--navbar-bg);
+  box-shadow: var(--navbar-shadow);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 20px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.boogie-logo {
+  height: 5rem;
+  right: 50px;
+  filter: invert(0);
+  transition: filter 0.3s ease-in-out; 
+}
+
+
+/* Dark Mode - Inverts the image */
+[data-theme="dark"] .boogie-logo {
+  filter: invert(1);
+}
+
+/* Top Section of the Navbar */
+.navbar-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+/* Hamburger Menu */
+.hamburger-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 40px;
+  height: 35px;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+.hamburger-menu .bar1,
+.hamburger-menu .bar2,
+.hamburger-menu .bar3 {
+  width: 100%;
+  height: 5px;
+  background-color: var(--hamburger-bar);
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.hamburger-menu.open .bar1 {
+  transform: rotate(45deg) translate(6px, 11px);
+}
+
+.hamburger-menu.open .bar2 {
+  opacity: 0;
+}
+
+.hamburger-menu.open .bar3 {
+  transform: rotate(-45deg) translate(5px, -10px);
+}
+
+/* Auth Buttons Container (NEW) */
+.navbar-auth-buttons {
+  display: flex;
+  gap: 0px;
+  z-index: 1000;
+  margin-right: 8%; /* optional spacing to separate from hamburger */
+  ;
+}
+
+/* Page Title */
+
+
+/* Buttons Section */
+.navbar-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+/* Nav Buttons & Inverted Styles */
+.nav-button {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  padding: 5px 5px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+
+.nav-button:hover {
+  background-color: var(--button-hover);
+}
+
+/* Navigation List (Mobile Dropdown) */
+.nav-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--navbar-bg);
+  margin: 0;
+  padding: 0;
+  display: none;
+  z-index: 100;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav-list.show {
+  display: flex;
+  z-index: 100; /* ensure it appears above other elements */
+  
+}
+
+/* Nav Item Styling */
+.nav-item {
+  margin: 10px 0;
+
+  
+}
+.inverted-nav-item {
+  color: var(--inverted-button-text)
+}
+
+.splash-underlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: 10; /* Make sure it stays under the nav-list */
+  opacity: 0;
+  animation: fadeInSplash 0.5s ease-in-out forwards;
+}
+
+@keyframes fadeInSplash {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.nav-item a {
+  color: var(--navbar-text);
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 2rem;
+  transition: background-color 0.3s;
+}
+
+.nav-item a:hover {
+  background-color: var(--button-bg);
+  
+  color: var(--text-color);
+  margin: 10px 0;
+  border-bottom: 5px solid var(--nav-list-item-border);
+}
+
+/* Desktop View */
+/* Desktop View */
+@media (min-width: 900px) {
+  .navbar {
+    justify-content: space-between;
+    height: 10%;
+    flex-direction: row; /* Arrange elements horizontally */
+    align-items: center; /* Center items vertically */
+  }
+
+  .navbar-top {
+    flex-direction: row; /* Horizontal layout for navbar top */
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .nav-list {
+    display: flex; /* Enable flexbox for horizontal display */
+    flex-direction: row; /* Align list items horizontally */
+    justify-content: flex-end; /* Align nav items to the right */
+    align-items: center; /* Center items vertically */
+    position: static; /* Remove fixed positioning */
+    width: auto; /* Adjust width automatically */
+    height: auto; /* Remove fixed height */
+    background-color: transparent; /* Remove background */
+    padding: 0;
+    margin: 0;
+  }
+
+  .nav-item {
+    margin: 0 15px; /* Add spacing between nav items */
+     /* Remove borders for desktop view */
+    
+  }
+  .nav-item:hover {
+    margin: 0 15px; /* Add spacing between nav items */
+     /* Remove borders for desktop view */
+    border: none;
+  }
+
+  
+ 
+
+  .hamburger-menu {
+    display: none; /* Hide hamburger on wider screens */
+  }
+
+  .boogie-logo {
+    position: relative;
+    left: 0;
+    margin-right: auto; /* Push the logo to the left */
+  }
+
+  .navbar-title {
+    display: none; /* Hide nav title on larger screens */
+  }
+
+  /* Active page styling for nav links */
+  .nav-item a {
+    position: relative;
+    background: transparent;
+    color: var(--navbar-text);
+    padding: 10px 15px;
+    font-size: 1.2em;
+    text-decoration: none;
+  }
+
+  /* Border-bottom for active link */
+  .nav-item a.active {
+    border-bottom: 3px solid var(--navbar-text);
+  }
+}
+
+/* Mobile Logo Centering and Resizing */
+@media (max-width: 899px) {
+  .boogie-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centers the logo */
+    height: 7rem; /* Increase size for mobile */
+    z-index: 1000; /* Ensure it stays above other elements */
+  }
+
+  .navbar-top {
+    position: relative;
+    height: 70px; /* Maintain consistent navbar height */
+  }
+}
+
+/* For Larger Screens - Keep the logo on the left */
+@media (min-width: 900px) {
+  .boogie-logo {
+    position: relative;
+    left: 0;
+    margin-right: auto; /* Align logo to the left */
+    height: 5rem; /* Default size for desktops */
+  }
+}

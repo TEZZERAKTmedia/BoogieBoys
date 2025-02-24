@@ -1,0 +1,119 @@
+/* Main container */
+.faq-appointment-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* FAQ Section */
+  .faq-section {
+    width: 50%;
+   
+  }
+  
+  .faq-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .faq-item {
+    border: 1px solid #ddd;
+    margin-bottom: 0.5rem;
+    padding: 1rem;
+    background-color: var(--btn-bg);
+    color: var(--inverted-button-text);
+    cursor: pointer;
+    
+  }
+  
+  .faq-item.active {
+    background-color: var(--btn-bg);
+    color: var(--text-color);
+
+  }
+  
+  .faq-question {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: .1rem solid var(--text-color);
+    color: var(--inverted-button-text);
+  }
+  
+  .faq-answer {
+    margin-top: 0.5rem;
+    padding: .3rem;
+    border-top: 1px solid var(--inverted-button-text);
+    color: var(--inverted-button-text);
+    font-size: clamp(.1rem, 4vw, .7rem);
+
+  }
+
+  .faq-link {
+    color: var(--inverted-button-text);
+  }
+
+  .faq-link:hover {
+    background-color: var(--btn-bg);
+    color: var(--btn-txt)
+  }
+
+  .faq-answer-wrapper {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.7s ease-in-out;
+  }
+  .faq-answer-wrapper.open {
+    max-height: 200px;
+  }
+  
+  /* Appointment Section */
+  .appointment-section {
+    width: 40%;
+    text-align: center;
+  }
+  
+  .appointment-section h2 {
+    font-size: clamp(1rem, 4vw, 1rem);
+  }
+  
+  .appointment-section hr {
+    margin: 1rem 0;
+    border: 1px solid #000;
+    width: 50%;
+    
+  }
+  
+  .book-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .social-section p {
+    font-weight: bold;
+    margin-bottom: 1rem;
+    font-size: clamp(1rem, 4vw, 1rem);
+  }
+  
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .social-icons a {
+    background-color: #000;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+  }
+  

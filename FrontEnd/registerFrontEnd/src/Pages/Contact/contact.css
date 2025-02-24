@@ -1,0 +1,161 @@
+/* Add to contact.css */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+/* Add to contact.css */
+
+.contact-container {
+    position: relative; /* or absolute / fixed */
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 100;
+  }
+  
+  
+  .form-title {
+    text-align: center;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 700;
+    margin-top: 20%;
+    margin-bottom: 20%;
+  }
+  
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .contact-form label {
+    font-weight: bold;
+  }
+  
+  .contact-form input,
+  .contact-form textarea {
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+  }
+  
+  .file-dropzone {
+    border: 2px dashed #ccc;
+    padding: 2rem;
+    text-align: center;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .file-dropzone.active {
+    background-color: #f0f8ff;
+    border-color: #007bff;
+  }
+  .loading-message {
+    color: #555;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  .submit-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .submit-button {
+    padding: 1rem;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #333;
+  }
+
+.file-dropzone {
+    border: 2px dashed #ccc;
+    padding: 1.5rem;
+    text-align: center;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .file-dropzone.active {
+    background-color: #f0f8ff;
+    border-color: #007bff;
+  }
+  .contact-form input.error-field,
+  .contact-form textarea.error-field {
+    border: 1px solid red;
+  }
+  
+  .missing-indicator {
+    color: red;
+    margin-left: 4px;
+  }
+  .status-message {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    padding: 0.75rem;
+    border-radius: 8px;
+  }
+  
+  .success {
+    background-color: #e6ffed;
+    color: #2c662d;
+  }
+  
+  .error {
+    background-color: #ffe6e6;
+    color: #b00020;
+  }
+  
+  button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  /* Phone Input Styling */
+.phone-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.phone-container select {
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+}
+
+/* Modernized File Dropzone */
+.file-dropzone-modern {
+  border: 2px dashed #007bff;
+  padding: 2rem;
+  text-align: center;
+  border-radius: 10px;
+  background: #f9f9f9;
+}
+
+.file-progress-bar {
+  width: 100%;
+  background: #e0e0e0;
+  border-radius: 8px;
+  margin-top: 1rem;
+  height: 10px;
+  overflow: hidden;
+}
+
+.file-progress {
+  height: 100%;
+  background-color: #007bff;
+  transition: width 0.3s ease;
+}
