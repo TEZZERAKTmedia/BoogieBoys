@@ -1,3 +1,4 @@
+require('dotenv').config({ path: require('path').resolve(__dirname, '../../.env') });
 
 const multer = require('multer');
 const nodemailer = require('nodemailer');

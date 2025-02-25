@@ -1,11 +1,7 @@
 const path = require('path');
-
-// Load dotenv with environment-specific configuration
-require('dotenv').config({
-  path: process.env.NODE_ENV === 'production'
-    ? path.resolve(__dirname, '../../.env')  // Make sure this path is correct
-    : path.resolve(__dirname, './.env'),
-});
+require('dotenv').config({ path: path.resolve(__dirname, '.env') }); // Explicitly load .env
+console.log("🛠 Loading .env from:", path.resolve(__dirname, '.env'));
+console.log("✅ Loaded ADMIN_EMAIL:", process.env.ADMIN_EMAIL); // Debugging
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
