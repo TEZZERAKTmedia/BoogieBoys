@@ -1,12 +1,3 @@
-// ✅ Dependencies
-const path = require('path');
-require('dotenv').config({
-  path: path.resolve(__dirname, '../../.env'), // Ensure correct path to .env
-});
-
-console.log("EMAIL_USER:", process.env.EMAIL_USER);
-console.log("ADMIN_EMAIL:", process.env.ADMIN_EMAIL);
-
 
 const multer = require('multer');
 const nodemailer = require('nodemailer');
