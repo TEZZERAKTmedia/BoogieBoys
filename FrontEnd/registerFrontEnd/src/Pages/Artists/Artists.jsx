@@ -12,7 +12,7 @@ const Artist = () => {
   });
 
   // Parallax depth for each artist card
-  const parallax1 = useTransform(scrollYProgress, [0, 1], ["-50px", "50px"]);
+  const parallax1 = useTransform(scrollYProgress, [0, 1], ["-50px", "40px"]);
   const parallax2 = useTransform(scrollYProgress, [0, 1], ["50px", "-50px"]);
   const parallax3 = useTransform(scrollYProgress, [0, 1], ["-30px", "30px"]);
 

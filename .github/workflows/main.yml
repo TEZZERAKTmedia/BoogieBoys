@@ -43,7 +43,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           source: "Backend/*"
-          target: "/home/tezzeraktmedia-boogieboys-api/htdocs/api.boogieboys.tezzeraktmedia.space/backend/"
+          target: "/home/tezzeraktmedia-api-boogieboys/htdocs/api.boogieboys.tezzeraktmedia.space/backend/"
           strip_components: 1
           rsync_opts: "--exclude=uploads/ --exclude=socialIcons/ --exclude=galleryuploads/"
 
