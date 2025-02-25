@@ -1,0 +1,86 @@
+/* Main Container Styling */
+.bb-privacy-container {
+    max-width: 900px;
+    margin: 4rem auto;
+    padding: 2rem;
+    background-color: #fff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    line-height: 1.8;
+  }
+  
+  /* Title and Headings */
+  .bb-privacy-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 1rem;
+  }
+  
+  .bb-privacy-subtitle {
+    text-align: center;
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 2rem;
+  }
+  
+  .bb-privacy-heading {
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    color: #222;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 0.5rem;
+  }
+  
+  /* Text and List Styling */
+  .bb-privacy-text {
+    font-size: 1rem;
+    margin: 1rem 0;
+  }
+  
+  .bb-privacy-list {
+    padding-left: 1.5rem;
+    margin: 1rem 0;
+  }
+  
+  .bb-privacy-list li {
+    margin-bottom: 0.5rem;
+    list-style-type: disc;
+  }
+  
+  /* Link Styling */
+  .bb-privacy-link {
+    color: #0077ff;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+  }
+  
+  .bb-privacy-link:hover {
+    color: #0051a3;
+  }
+  
+  /* Section Styling */
+  .bb-privacy-section {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .bb-privacy-container {
+      padding: 1rem;
+    }
+  
+    .bb-privacy-title {
+      font-size: 2rem;
+    }
+  
+    .bb-privacy-heading {
+      font-size: 1.25rem;
+    }
+  }
+  

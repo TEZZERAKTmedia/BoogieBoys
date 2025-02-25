@@ -18,6 +18,7 @@
   right: 50px;
   filter: invert(0);
   transition: filter 0.3s ease-in-out; 
+  
 }
 
 
@@ -174,10 +175,15 @@
   margin: 10px 0;
   border-bottom: 5px solid var(--nav-list-item-border);
 }
+  .privacy {
+    margin-top: 100px;
+    bottom: 0;
+    color: var(--text-color);
+  }
 
 /* Desktop View */
 /* Desktop View */
-@media (min-width: 900px) {
+@media (min-width: 1000px) {
   .navbar {
     justify-content: space-between;
     height: 10%;
@@ -204,6 +210,8 @@
     padding: 0;
     margin: 0;
   }
+
+
 
   .nav-item {
     margin: 0 15px; /* Add spacing between nav items */
@@ -242,6 +250,9 @@
     font-size: 1.2em;
     text-decoration: none;
   }
+  .privacy {
+    visibility: hidden;
+  }
 
   /* Border-bottom for active link */
   .nav-item a.active {
@@ -256,7 +267,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); /* Centers the logo */
-    height: 7rem; /* Increase size for mobile */
+    height: clamp(7rem, 2.5vw, 20rem); /* Increase size for mobile */
     z-index: 1000; /* Ensure it stays above other elements */
   }
 
@@ -272,6 +283,6 @@
     position: relative;
     left: 0;
     margin-right: auto; /* Align logo to the left */
-    height: 5rem; /* Default size for desktops */
+    height: clamp(7rem, 2.5vw, 15rem); /* Default size for desktops */
   }
 }

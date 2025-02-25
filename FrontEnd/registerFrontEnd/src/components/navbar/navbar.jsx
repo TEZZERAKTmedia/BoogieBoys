@@ -107,9 +107,8 @@ const Navbar = () => {
         <li className="nav-item" onClick={closeMenu}>
           <Link to="/shop">Shop</Link>
         </li>
-        <li className="nav-item" onClick={closeMenu}>
-          <Link to="/about"> About</Link>
-        </li>
+
+
         {/*
         <li className="inverted-button-p-t" onClick={closeMenu}>
           <Link to="/privacy-policy" className="inverted-button">Privacy Policy</Link>
@@ -119,7 +118,9 @@ const Navbar = () => {
         </li>
         {/* Theme Toggle */}
         <ThemeToggle />
-        
+        <li  className="privacy" onClick={closeMenu}>
+          <Link  className="privacy" to="/privacy">Privacy Policy</Link>
+        </li>
       </ul>
       
       
@@ -139,6 +140,9 @@ const Navbar = () => {
         </div>
       )}
       */}
+     
+
+      
     </nav>
   );
 };

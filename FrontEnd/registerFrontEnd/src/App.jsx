@@ -4,6 +4,8 @@ import AfterCare from './TattoAfterCare/AfterCare';
 import Navbar from './components/navbar/navbar.jsx';
 import Contact from './Pages/Contact/Contact.jsx';
 import Shop from './Pages/Store/Shop.jsx';
+import Artist from './Pages/Artists/Artists.jsx';
+import Privacy from './Pages/Privacy/Privacy.jsx';
 
 import './App.css';
 const preloadGif = new Image();
@@ -15,11 +17,12 @@ function App() {
       <Routes>
         {/* Home Route */}
         <Route path="/" element={<Home />} />
-        <Route path="/artists"  />
+        <Route path="/artists"  element={<Artist/>} />
         <Route path="/designs"  />
         <Route path="/shop"  element={<Shop/>}/>
         <Route path="/appointments"  />
         <Route path="/contact" element={<Contact/>} />
+        <Route path="/privacy" element={<Privacy />} />
 
 
         {/* Tattoo AfterCare Route */}
