@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Pages/Home/Home.jsx'; // Import the new Home component
-import AfterCare from './TattoAfterCare/AfterCare';
+import AfterCare from './Pages/TattoAfterCare/AfterCare.jsx';
 import Navbar from './components/navbar/navbar.jsx';
 import Contact from './Pages/Contact/Contact.jsx';
 import Shop from './Pages/Store/Shop.jsx';

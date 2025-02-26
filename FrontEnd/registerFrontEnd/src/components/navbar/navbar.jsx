@@ -110,6 +110,9 @@ const Navbar = () => {
         <li className="nav-item" onClick={closeMenu}>
           <Link to="/designs">Designs</Link>
         </li>
+        <li className="nav-item" onClick={closeMenu}>
+          <Link to="/aftercare">Tattoo Aftercare</Link>
+        </li>
 
 
         {/*
@@ -121,6 +124,7 @@ const Navbar = () => {
         </li>
         {/* Theme Toggle */}
         <ThemeToggle />
+
         <li  className="privacy" onClick={closeMenu}>
           <Link  className="privacy" to="/privacy">Privacy Policy</Link>
         </li>

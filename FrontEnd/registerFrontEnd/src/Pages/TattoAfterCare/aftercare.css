@@ -50,9 +50,9 @@
 .tutorial-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  column-gap: 20px;
-  row-gap: 10px;
-  padding: 20px;
+
+
+  
   margin: 0 auto;
   min-height: 90vh;
   justify-content: center;
@@ -76,15 +76,7 @@
   }
 }
 
-@media (min-width: 1024px) {
-  .tutorial-grid {
-    margin-top: 20%;
-    grid-template-columns: repeat(6, 1fr);
-  }
-  .header{
-    margin-top: -10%;
-  }
-}
+
 
 @media (min-width: 1440px) {
   .tutorial-grid {
