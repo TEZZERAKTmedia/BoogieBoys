@@ -101,9 +101,11 @@ const Navbar = () => {
         <li className="nav-item" onClick={closeMenu}>
           <Link to="/artists">Artists</Link>
         </li>
+        {/*
         <li className="nav-item" onClick={closeMenu}>
           <Link to="/gallery">Gallery</Link>
         </li>
+      */}
         <li className="nav-item" onClick={closeMenu}>
           <Link to="/shop">Shop</Link>
         </li>
