@@ -90,6 +90,8 @@ body {
   justify-items: center;
 }
 
+
+
 .gallery-item {
   width: 100%;
   aspect-ratio: 1/1; /* Ensures square images */

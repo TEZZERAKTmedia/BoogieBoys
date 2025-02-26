@@ -1,5 +1,6 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { useLocation } from 'react-router-dom';
 import { registerApi } from '../../config/axios';
 import './contact.css';
 
@@ -24,6 +25,7 @@ const formatPhoneNumber = (value) => {
 };
 
 const Contact = () => {
+  const location = useLocation(); // Retrieve passed state from Home
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -69,7 +71,6 @@ const Contact = () => {
     }
   };
 
-  // File Upload Handling
   // File Upload Handling (Accept only 5 image files)
   const onDrop = useCallback(
     (acceptedFiles) => {
@@ -83,8 +84,10 @@ const Contact = () => {
         return;
       }
   
-      // Only add images up to the limit
-      const filesToAdd = validImages.slice(0, remainingSlots);
+      // Only add images up to the limit and assign a preview URL to each file.
+      const filesToAdd = validImages.slice(0, remainingSlots).map(file =>
+        Object.assign(file, { preview: URL.createObjectURL(file) })
+      );
   
       if (filesToAdd.length < validImages.length) {
         alert("You've reached the maximum upload limit of 5 images.");
@@ -99,13 +102,40 @@ const Contact = () => {
     [files]
   );
   
-const { getRootProps, getInputProps, isDragActive } = useDropzone({
-  onDrop,
-  multiple: true,
-  maxSize: MAX_FILE_SIZE_MB * 1024 * 1024, // 500MB total limit
-  accept: { 'image/*': [] }, // Only allow images
-});
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    multiple: true,
+    maxSize: MAX_FILE_SIZE_MB * 1024 * 1024, // 500MB total limit
+    accept: { 'image/*': [] }, // Only allow images
+  });
 
+  // Check if an image was passed from the Home component and convert it to a File object.
+  useEffect(() => {
+    if (location.state?.attachedImage) {
+      const imageURL = location.state.attachedImage;
+      // Avoid duplicate addition if the file is already added (using preview property)
+      if (!files.find((f) => f.preview === imageURL)) {
+        fetch(imageURL)
+          .then(res => res.blob())
+          .then(blob => {
+            const filename = imageURL.split('/').pop();
+            const file = new File([blob], filename, { type: blob.type });
+            file.preview = imageURL;
+            const updatedFiles = [...files, file];
+            setFiles(updatedFiles);
+            const total = updatedFiles.reduce((sum, f) => sum + f.size, 0) / (1024 * 1024);
+            setTotalSize(total.toFixed(2));
+          })
+          .catch(err => console.error("Failed to attach image:", err));
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.state?.attachedImage]);
+
+  // Clean up preview URLs to avoid memory leaks
+  useEffect(() => {
+    return () => files.forEach(file => URL.revokeObjectURL(file.preview));
+  }, [files]);
 
   // Submit the form
   const handleSubmit = async (e) => {
@@ -203,32 +233,39 @@ const { getRootProps, getInputProps, isDragActive } = useDropzone({
           />
 
           {/* File Upload Section */}
-          {/* File Upload Section */}
-<label>Reference Images (Max 5 files, Total 500MB)</label>
-<div {...getRootProps()} className={`file-dropzone-modern ${isDragActive ? 'active' : ''}`}>
-  <input {...getInputProps()} />
-  {files.length > 0 ? (
-    <>
-      <ul>
-        {files.map((file, index) => (
-          <li key={index}>
-            {file.name} - {(file.size / (1024 * 1024)).toFixed(2)} MB
-          </li>
-        ))}
-      </ul>
-      <div className="file-progress-bar">
-        <div
-          className="file-progress"
-          style={{ width: `${(totalSize / MAX_FILE_SIZE_MB) * 100}%` }}
-        />
-      </div>
-      <p>{totalSize} MB of {MAX_FILE_SIZE_MB} MB used</p>
-    </>
-  ) : (
-    <p>Click or drag up to 5 images here to upload.</p>
-  )}
-</div>
-
+          <label>Reference Images (Max 5 files, Total 500MB)</label>
+          <div {...getRootProps()} className={`file-dropzone-modern ${isDragActive ? 'active' : ''}`}>
+            <input {...getInputProps()} />
+            {files.length > 0 ? (
+              <>
+                {/* Preview Grid */}
+                <div className="preview-grid">
+                  {files.map((file, index) => (
+                    <div key={index} className="preview-item">
+                      <img
+                        src={file.preview}
+                        alt={`Preview ${index + 1}`}
+                        style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                      />
+                      <div className="preview-info">
+                        <p>{file.name}</p>
+                        <p>{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="file-progress-bar">
+                  <div
+                    className="file-progress"
+                    style={{ width: `${(totalSize / MAX_FILE_SIZE_MB) * 100}%` }}
+                  />
+                </div>
+                <p>{totalSize} MB of {MAX_FILE_SIZE_MB} MB used</p>
+              </>
+            ) : (
+              <p>Click or drag up to 5 images here to upload.</p>
+            )}
+          </div>
 
           {/* Submit Button */}
           <button type="submit" className="submit-button" disabled={loading}>

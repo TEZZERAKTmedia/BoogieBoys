@@ -6,6 +6,7 @@ import Contact from './Pages/Contact/Contact.jsx';
 import Shop from './Pages/Store/Shop.jsx';
 import Artist from './Pages/Artists/Artists.jsx';
 import Privacy from './Pages/Privacy/Privacy.jsx';
+import Design from './Pages/Designs/Designs.jsx';
 
 import './App.css';
 const preloadGif = new Image();
@@ -18,7 +19,7 @@ function App() {
         {/* Home Route */}
         <Route path="/" element={<Home />} />
         <Route path="/artists"  element={<Artist/>} />
-        <Route path="/designs"  />
+        <Route path="/designs"  element={<Design/>}/>
         <Route path="/shop"  element={<Shop/>}/>
         <Route path="/appointments"  />
         <Route path="/contact" element={<Contact/>} />

@@ -45,7 +45,7 @@ const Home = () => {
             Every tattoo from jonny.tatu is done with a specialized single needle ensuring that our clients get the finest lines and the highest precision.
           </p>
           <Link to="/store" className="hero-btn">
-            Book Now
+           Schedule an Appointment
           </Link>
         </div>
       </motion.section>

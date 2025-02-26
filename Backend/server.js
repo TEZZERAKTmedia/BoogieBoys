@@ -6,12 +6,6 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
-
-
-
-
-
-
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken'); // Assuming JWT is used for auth

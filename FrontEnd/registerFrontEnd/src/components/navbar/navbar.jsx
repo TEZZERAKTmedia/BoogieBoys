@@ -107,6 +107,9 @@ const Navbar = () => {
         <li className="nav-item" onClick={closeMenu}>
           <Link to="/shop">Shop</Link>
         </li>
+        <li className="nav-item" onClick={closeMenu}>
+          <Link to="/designs">Designs</Link>
+        </li>
 
 
         {/*

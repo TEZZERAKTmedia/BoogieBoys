@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Jonny from "../../assets/Jonny-artist.png";
 import Joel from "../../assets/Joel-artist.png";
+import Bryan from "../../assets/Ben-artist.jpeg";
 import "./artists.css";
 
 const Artist = () => {
@@ -43,9 +44,17 @@ const Artist = () => {
           </a>
         </motion.div>
 
-        {/* Placeholder for Future Artist */}
+        {/*Artist 3 */}
         <motion.div className="artist-card" style={{ y: parallax3 }}>
-          <img src="" alt="Coming Soon" />
+        <a
+            href="https://www.instagram.com/irl_brain/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+          <img src={Bryan} alt="Bryan Olivas" />
+          <p>@irl_brain</p>
+
+        </ a>
         </motion.div>
       </div>
     </div>
