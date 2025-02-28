@@ -1,5 +1,5 @@
 import React from "react";
-import './PrivacyPolicy.css'; // Import the custom CSS file
+import './PrivacyPolicy.css'; // Ensure this file contains responsive styles
 
 const PrivacyPolicy = () => {
   return (
@@ -17,38 +17,52 @@ const PrivacyPolicy = () => {
         <p className="bb-privacy-text">
           We may collect the following types of personal information:
         </p>
-        <ul className="bb-privacy-list">
-          <li><strong>Contact Information:</strong> Name, email address, and phone number.</li>
-          <li><strong>Appointment Details:</strong> Preferred appointment dates and times.</li>
-          <li><strong>Browsing Information:</strong> Information about your visit, including IP address, browser type, and pages viewed.</li>
-        </ul>
+        <p className="bb-privacy-text"><strong>Contact Information:</strong> Name, email address, and phone number.</p>
+        <p className="bb-privacy-text"><strong>Appointment Details:</strong> Preferred appointment dates and times.</p>
+        <p className="bb-privacy-text"><strong>Browsing Information:</strong> IP address, browser type, and pages viewed.</p>
       </section>
 
       <section className="bb-privacy-section">
-        <h2 className="bb-privacy-heading">2. How We Use Your Information</h2>
-        <ul className="bb-privacy-list">
-          <li><strong>Schedule Appointments:</strong> Process and manage your appointments.</li>
-          <li><strong>Improve Services:</strong> Enhance your experience based on feedback.</li>
-          <li><strong>Send Notifications:</strong> Updates related to your appointments or services.</li>
-        </ul>
-      </section>
-
-      <section className="bb-privacy-section">
-        <h2 className="bb-privacy-heading">3. How We Protect Your Information</h2>
+        <h2 className="bb-privacy-heading">2. HIPAA Compliance & Data Protection</h2>
         <p className="bb-privacy-text">
-          We implement security measures, including encrypted servers and restricted access, to keep your personal information safe.
+          Boogie Boys follows <strong>HIPAA (Health Insurance Portability and Accountability Act)</strong> compliance
+          to ensure the protection of personal and medical data submitted through intake forms.  
+        </p>
+        <p className="bb-privacy-text">
+          We use **HIPAA-compliant services** for storing and processing personal data. 
+          All sensitive health-related information is encrypted and stored on **secured, access-restricted servers**.
         </p>
       </section>
 
       <section className="bb-privacy-section">
-        <h2 className="bb-privacy-heading">4. Sharing Your Information</h2>
-        <p className="bb-privacy-text">
-          We don’t sell or trade your information. We may share data with trusted third parties who help operate our services under strict confidentiality.
-        </p>
+        <h2 className="bb-privacy-heading">3. How We Use Your Information</h2>
+        <p className="bb-privacy-text"><strong>Schedule Appointments:</strong> Process and manage your bookings securely.</p>
+        <p className="bb-privacy-text"><strong>Improve Services:</strong> Enhance user experience based on feedback.</p>
+        <p className="bb-privacy-text"><strong>Send Notifications:</strong> Updates related to appointments, services, or important changes.</p>
       </section>
 
       <section className="bb-privacy-section">
-        <h2 className="bb-privacy-heading">5. Third-Party Services</h2>
+        <h2 className="bb-privacy-heading">4. How We Protect Your Information</h2>
+        <p className="bb-privacy-text">
+          We take extensive security measures to protect your data, including:
+        </p>
+        <p className="bb-privacy-text"><strong>Encryption:</strong> All user data is encrypted both in transit and at rest.</p>
+        <p className="bb-privacy-text"><strong>Access Controls:</strong> Only authorized personnel can access sensitive data.</p>
+        <p className="bb-privacy-text"><strong>Secure Servers:</strong> Information is stored on protected, HIPAA-compliant servers.</p>
+      </section>
+
+      <section className="bb-privacy-section">
+        <h2 className="bb-privacy-heading">5. Sharing Your Information</h2>
+        <p className="bb-privacy-text">
+          We do not sell or trade your information. We may share data with **trusted third-party services** under strict confidentiality, including:
+        </p>
+        <p className="bb-privacy-text"><strong>Payment Processing:</strong> Transactions are handled securely by <strong>Stripe</strong>.</p>
+        <p className="bb-privacy-text"><strong>HIPAA-Compliant Data Storage:</strong> Intake forms and sensitive data are stored securely.</p>
+        <p className="bb-privacy-text"><strong>Appointment Scheduling:</strong> Integrated scheduling services assist with bookings.</p>
+      </section>
+
+      <section className="bb-privacy-section">
+        <h2 className="bb-privacy-heading">6. Third-Party Services</h2>
         <p className="bb-privacy-text">
           We use <strong>Spring Shop</strong> for transactions. Please review the{" "}
           <a href="https://spring.shop/privacy" target="_blank" rel="noopener noreferrer" className="bb-privacy-link">
@@ -58,23 +72,21 @@ const PrivacyPolicy = () => {
       </section>
 
       <section className="bb-privacy-section">
-        <h2 className="bb-privacy-heading">6. Your Choices</h2>
-        <ul className="bb-privacy-list">
-          <li><strong>Access Information:</strong> Request access to your data.</li>
-          <li><strong>Correct Information:</strong> Request corrections for inaccuracies.</li>
-          <li><strong>Opt-Out:</strong> Unsubscribe from promotional communications anytime.</li>
-        </ul>
+        <h2 className="bb-privacy-heading">7. Your Rights & Choices</h2>
+        <p className="bb-privacy-text"><strong>Access Your Data:</strong> You can request a copy of your personal data.</p>
+        <p className="bb-privacy-text"><strong>Update Your Data:</strong> If any information is incorrect, you may request corrections.</p>
+        <p className="bb-privacy-text"><strong>Opt-Out:</strong> You may opt-out of promotional communications anytime.</p>
       </section>
 
       <section className="bb-privacy-section">
-        <h2 className="bb-privacy-heading">7. Changes to This Privacy Policy</h2>
+        <h2 className="bb-privacy-heading">8. Changes to This Privacy Policy</h2>
         <p className="bb-privacy-text">
-          We may update this policy periodically. Check back for any changes.
+          We may update this policy periodically. Any major changes will be announced via email or on our website.
         </p>
       </section>
 
       <section className="bb-privacy-section">
-        <h2 className="bb-privacy-heading">8. Contact Us</h2>
+        <h2 className="bb-privacy-heading">9. Contact Us</h2>
         <p className="bb-privacy-text">
           Questions or concerns? Contact us at:{" "}
           <a href="mailto:Hello@boogieboys.one" className="bb-privacy-link">
