@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FaInstagram, FaTiktok } from 'react-icons/fa'; // Import icons
 import './faq.css';
 
 const FAQAppointment = () => {
@@ -12,7 +13,7 @@ const FAQAppointment = () => {
   const faqs = [
     { question: 'How can I book an Appointment?', answer: 'You can book an appointment by clicking here.', shouldLink: true, path: '/contact' },
     { question: 'Do you allow walk-ins?', answer: 'Boogie Boys is a private studio and works by appointment only. Schedule an appointment today!', shouldLink: true, path: '/contact' },
-    { question: 'Can I schedule a personal consultation?', answer: "If you'd like to schedule a personal consultation before scheduling a tattoo, please specify that when filling out a contact form. Feel free to include reference pictures in your message.",  shouldLink: true, path: '/contact' },
+    { question: 'Can I schedule a personal consultation?', answer: "If you'd like to schedule a personal consultation before scheduling a tattoo, please specify that when filling out a contact form. Feel free to include reference pictures in your message.", shouldLink: true, path: '/contact' },
   ];
 
   return (
@@ -36,9 +37,9 @@ const FAQAppointment = () => {
               {faq.answer && (
                 <div className="faq-answer">
                   {faq.shouldLink ? (
-                    <Link to={faq.path} className="faq-link">{faq.answer}</Link> // Conditionally render link
+                    <Link to={faq.path} className="faq-link">{faq.answer}</Link>
                   ) : (
-                    faq.answer // Render plain text
+                    faq.answer
                   )}
                 </div>
               )}
@@ -52,14 +53,16 @@ const FAQAppointment = () => {
         <h2>Schedule an appointment</h2>
         <hr />
         <Link to="/contact" className="book-button">Book Now</Link>
+
+        {/* Social Media Section */}
         <div className="social-section">
           <p>FOLLOW US</p>
           <div className="social-icons">
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-              {/* Add Instagram Icon Here */}
+            <a href="https://www.instagram.com/xboogieboysx/?hl=en" target="_blank" rel="noopener noreferrer">
+              <FaInstagram size={30}  />
             </a>
-            <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer">
-              {/* Add TikTok Icon Here */}
+            <a href="https://www.tiktok.com/@boogieboys" target="_blank" rel="noopener noreferrer">
+              <FaTiktok size={30}  />
             </a>
           </div>
         </div>

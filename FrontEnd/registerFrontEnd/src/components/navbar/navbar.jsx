@@ -49,7 +49,7 @@ const Navbar = () => {
         <AnimatePresence>
         <motion.div
           
-          
+          className='navbar-title'
         >
             {currentPageTitle}
           </motion.div>
@@ -113,7 +113,7 @@ const Navbar = () => {
           <Link to="/designs">Designs</Link>
         </li>
         <li className="nav-item" onClick={closeMenu}>
-          <Link to="/aftercare">Tattoo Aftercare</Link>
+          <Link to="/aftercare">Aftercare</Link>
         </li>
 
 

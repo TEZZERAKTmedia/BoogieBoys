@@ -50,6 +50,33 @@
     font-size: clamp(.1rem, 4vw, .7rem);
 
   }
+  .social-icons {
+    display: flex !important;
+    gap: 15px !important;
+    margin-top: 10px !important;
+  }
+  
+  .social-icons a {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    background-color: var(--btn-bg) !important;
+    color: var(--inverted-button-text) !important;
+    transition: transform 0.2s ease-in-out !important;
+  }
+  
+  .social-icons a:hover {
+    transform: scale(1.1) !important;
+  }
+  
+  
+  .social-icons a:hover {
+    transform: scale(1.1);
+  }
+  
 
   .faq-link {
     color: var(--inverted-button-text);

@@ -16,6 +16,7 @@
 .boogie-logo {
   height: 5rem;
   right: 50px;
+  margin-top: 1%;
   filter: invert(0);
   transition: filter 0.3s ease-in-out; 
   
@@ -208,7 +209,8 @@
     height: auto; /* Remove fixed height */
     background-color: transparent; /* Remove background */
     padding: 0;
-    margin: 0;
+    margin-top: 50px;
+    margin-right: 0%;
   }
 
 
