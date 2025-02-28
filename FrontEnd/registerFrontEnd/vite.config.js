@@ -9,24 +9,22 @@ export default defineConfig({
     imagetools(),
     ViteImageOptimizer({
       png: {
-        quality: 10, // 🔥 Reduce quality to 10% (High compression)
+        quality: 50, // 🔥 Lower quality (higher compression)
         speed: 1, // Max compression
-        strip: true, // Remove metadata
       },
       jpg: {
-        quality: 10, // 🔥 Reduce JPG quality to 10% (90% compression)
-        progressive: true, // Enables progressive rendering (loads gradually)
-        strip: true, // Removes metadata for smaller files
+        quality: 50, // 🔥 Reduce to 50% quality
+        progressive: true, // Enables progressive rendering
       },
       webp: {
-        quality: 10, // 🔥 Reduce WebP quality to 10% (Maximum compression)
-        method: 6, // Highest compression-to-quality tradeoff
+        quality: 40, // 🔥 Reduce to 40% for best size reduction
+        method: 6, // Best quality-to-size tradeoff
       },
       avif: {
-        quality: 10, // 🔥 Extreme AVIF compression (90% smaller files)
-        speed: 0, // Max compression (0 = best compression, 9 = fastest)
+        quality: 40, // 🔥 Reduce quality for better compression
+        speed: 0, // Max compression
       },
-      svg: false, // ✅ Disable SVG optimization to avoid processing errors
+      svg: false, // Disable SVG optimization if causing errors
     }),
   ],
   server: {
