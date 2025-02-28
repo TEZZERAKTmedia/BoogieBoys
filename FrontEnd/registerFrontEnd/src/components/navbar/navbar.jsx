@@ -4,8 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SocialLinks from './socialLinks';
 import ThemeToggle from '../themetoggle/Dark-Light';
 import './navbar.css'; // Import the CSS file for styling
-import Logo from '../../assets/Logo.png';
-import Splash from '../../assets/boogieboys.gif';
+import Logo from '../../assets/Logo.webp';
+import Splash from '../../assets/boogieboys.webp';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);

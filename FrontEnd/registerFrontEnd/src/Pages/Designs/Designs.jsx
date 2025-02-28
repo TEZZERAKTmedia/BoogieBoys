@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import FAQAppointment from '../Home/Faq';
 import './designs.css';
 
-import D1 from '../../assets/design-1.png';
-import D2 from '../../assets/design-2.png';
-import D3 from '../../assets/design-3.png';
+import D1 from '../../assets/design-1.webp';
+import D2 from '../../assets/design-2.webp';
+import D3 from '../../assets/design-3.webp';
 
 const Home = () => {
   const scrollContainerRef = useRef(null);

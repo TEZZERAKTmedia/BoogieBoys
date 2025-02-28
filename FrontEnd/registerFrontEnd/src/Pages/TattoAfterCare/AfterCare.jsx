@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './aftercare.css';
-import WashGif from '../../assets/Wash.gif';
-import SoapGif from '../../assets/Soap.gif';
-import AquaphorGif from '../../assets/Aquaphor.gif';
-import AirGif from '../../assets/Air.gif';
-import DontScratchGif from '../../assets/Dont-Scratch.gif';
-import SunGif from '../../assets/Sun.gif';
+import WashGif from '../../assets/Wash.webp';
+import SoapGif from '../../assets/Soap.webp';
+import AquaphorGif from '../../assets/Aquaphor.webp';
+import AirGif from '../../assets/Air.webp';
+import DontScratchGif from '../../assets/Dont-Scratch.webp';
+import SunGif from '../../assets/Sun.webp';
 
 const slides = [
   { image: WashGif, text: 'Wash your hands before touching your tattoo.' },

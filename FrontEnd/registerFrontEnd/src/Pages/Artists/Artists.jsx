@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import Jonny from "../../assets/Jonny-artist.png";
-import Joel from "../../assets/Joel-artist.png";
-import Bryan from "../../assets/Ben-artist.jpeg";
+import Jonny from "../../assets/Jonny-artist.webp";
+import Joel from "../../assets/Joel-artist.webp";
+import Bryan from "../../assets/Ben-artist-fixed.webp";
 import "./artists.css";
 
 const Artist = () => {

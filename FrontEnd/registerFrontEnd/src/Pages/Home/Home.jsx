@@ -3,15 +3,15 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import './Home.css';
 import FAQAppointment from './Faq';
-import Headshot from '../../assets/Jonny.jpeg';
-import P1 from '../../assets/1-paralax.jpeg';
-import P2 from '../../assets/2-paralax.jpeg';
-import G1 from '../../assets/1x6.jpeg';
-import G2 from '../../assets/2x6.jpeg';
-import G3 from '../../assets/3x6.jpeg';
-import G4 from '../../assets/4x6.jpeg';
-import G5 from '../../assets/5x6.jpeg';
-import G6 from '../../assets/6x6.jpeg';
+import Headshot from '../../assets/Jonny.webp';
+import P1 from '../../assets/1-paralax.webp';
+import P2 from '../../assets/2-paralax.webp';
+import G1 from '../../assets/1x6.webp';
+import G2 from '../../assets/2x6.webp';
+import G3 from '../../assets/3x6.webp';
+import G4 from '../../assets/4x6.webp';
+import G5 from '../../assets/5x6.webp';
+import G6 from '../../assets/6x6.webp';
 
 const Home = () => {
   const scrollContainerRef = useRef(null);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import loadingImage from '../../assets/loading.png';
+import loadingImage from '../../assets/loading.webp';
 import './social_links.css';
 
 const SocialLinks = () => {
