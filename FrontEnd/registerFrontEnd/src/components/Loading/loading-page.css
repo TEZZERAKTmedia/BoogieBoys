@@ -1,51 +1,42 @@
-/* src/components/LoadingPage.css */
-.loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--bg-overlay); /* Semi-transparent overlay */
-    z-index: 9999; /* Ensure it appears above other content */
-  }
-  
-  .loading-page {
-    background-color: var(--bg-overlay);
-    border-radius: 20px;
-    padding: 20px;
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5); /* Adds shadow to make it pop */
-  }
+.loading-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: var(--bg-color); /* Example background color */
+}
 
-  .loading-section {
-    background-color: var(--navbar-bg);
-    border-radius: 20px;
-    padding: 20px;
-    display: flex;
-    width: 50vw;
-    height: 30vh;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
-  }
-  
-  .loading-page img {
-    width: 100px; /* Adjust size as needed */
-    height: 100px;
-  }
-  
-  .loading-page p {
-    margin-top: 16px;
-    font-size: 18px;
-    color: var(--text-color);
-  }
-  
+.loading-section {
+  text-align: center;
+  color: #fff;
+}
+
+.animation {
+  width: 100px;  /* Adjust size as needed */
+  height: 100px; /* Adjust size as needed */
+  margin-bottom: 20px;
+}
+
+.progress-bar {
+  width: 80%;
+  height: 10px;
+  background-color: #ddd;
+  border-radius: 5px;
+  margin: 20px auto 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-indicator {
+  position: absolute;
+  height: 100%;
+  width: 0%;
+  background-color: var(--text-color);
+  animation: progressAnimation 5s infinite;
+}
+
+@keyframes progressAnimation {
+  0% { width: 0%; }
+  50% { width: 100%; }
+  100% { width: 0%; }
+}

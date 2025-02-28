@@ -2,6 +2,7 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useLocation } from 'react-router-dom';
 import { registerApi } from '../../config/axios';
+import LoadingPage from '../../components/Loading/loading';
 import './contact.css';
 
 const MAX_FILE_SIZE_MB = 500; // 500MB limit
@@ -75,7 +76,6 @@ const Contact = () => {
   const onDrop = useCallback(
     (acceptedFiles) => {
       const validImages = acceptedFiles.filter((file) => file.type.startsWith('image/'));
-      
       // Calculate how many slots are left
       const remainingSlots = 5 - files.length;
   
@@ -95,7 +95,6 @@ const Contact = () => {
   
       const newFiles = [...files, ...filesToAdd];
       const total = newFiles.reduce((sum, file) => sum + file.size, 0) / (1024 * 1024); // Calculate size in MB
-  
       setFiles(newFiles);
       setTotalSize(total.toFixed(2));
     },
@@ -171,107 +170,112 @@ const Contact = () => {
   return (
     <section id="contact" className="contact-section">
       <div className="contact-container">
-        <h2 className="form-title">Schedule Appointment</h2>
-        <form className="contact-form" onSubmit={handleSubmit}>
-          {/* Name Input */}
-          <label>Name</label>
-          <input
-            ref={inputRefs.name}
-            id="name"
-            placeholder="Full Name"
-            value={formData.name}
-            onChange={handleChange}
-            onKeyDown={(e) => handleKeyDown(e, 'name')}
-          />
+        {loading ? (
+          <LoadingPage />
+        ) : (
+          <>
+            <h2 className="form-title">Schedule Appointment</h2>
+            <form className="contact-form" onSubmit={handleSubmit}>
+              {/* Name Input */}
+              <label>Name</label>
+              <input
+                ref={inputRefs.name}
+                id="name"
+                placeholder="Full Name"
+                value={formData.name}
+                onChange={handleChange}
+                onKeyDown={(e) => handleKeyDown(e, 'name')}
+              />
 
-          {/* Email Input */}
-          <label>Email</label>
-          <input
-            ref={inputRefs.email}
-            id="email"
-            type="email"
-            autoComplete="email"
-            placeholder="Email Address"
-            value={formData.email}
-            onChange={handleChange}
-            onKeyDown={(e) => handleKeyDown(e, 'email')}
-          />
+              {/* Email Input */}
+              <label>Email</label>
+              <input
+                ref={inputRefs.email}
+                id="email"
+                type="email"
+                autoComplete="email"
+                placeholder="Email Address"
+                value={formData.email}
+                onChange={handleChange}
+                onKeyDown={(e) => handleKeyDown(e, 'email')}
+              />
 
-          {/* Phone Input with Country Code */}
-          <label>Phone Number</label>
-          <div className="phone-container">
-            <select
-              value={formData.countryCode}
-              onChange={(e) => setFormData({ ...formData, countryCode: e.target.value })}
-            >
-              {countryCodes.map((country) => (
-                <option key={country.code} value={country.code}>
-                  {country.country} ({country.code})
-                </option>
-              ))}
-            </select>
-            <input
-              ref={inputRefs.phone}
-              id="phone"
-              placeholder="(000)-000-0000"
-              value={formData.phone}
-              onChange={handleChange}
-              onKeyDown={(e) => handleKeyDown(e, 'phone')}
-              maxLength="14"
-            />
-          </div>
-
-          {/* Description Input */}
-          <label>Description of Tattoo</label>
-          <textarea
-            ref={inputRefs.description}
-            id="description"
-            placeholder="Describe your tattoo idea"
-            value={formData.description}
-            onChange={handleChange}
-            onKeyDown={(e) => handleKeyDown(e, 'description')}
-          />
-
-          {/* File Upload Section */}
-          <label>Reference Images (Max 5 files, Total 500MB)</label>
-          <div {...getRootProps()} className={`file-dropzone-modern ${isDragActive ? 'active' : ''}`}>
-            <input {...getInputProps()} />
-            {files.length > 0 ? (
-              <>
-                {/* Preview Grid */}
-                <div className="preview-grid">
-                  {files.map((file, index) => (
-                    <div key={index} className="preview-item">
-                      <img
-                        src={file.preview}
-                        alt={`Preview ${index + 1}`}
-                        style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
-                      />
-                      <div className="preview-info">
-                        <p>{file.name}</p>
-                        <p>{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
-                      </div>
-                    </div>
+              {/* Phone Input with Country Code */}
+              <label>Phone Number</label>
+              <div className="phone-container">
+                <select
+                  value={formData.countryCode}
+                  onChange={(e) => setFormData({ ...formData, countryCode: e.target.value })}
+                >
+                  {countryCodes.map((country) => (
+                    <option key={country.code} value={country.code}>
+                      {country.country} ({country.code})
+                    </option>
                   ))}
-                </div>
-                <div className="file-progress-bar">
-                  <div
-                    className="file-progress"
-                    style={{ width: `${(totalSize / MAX_FILE_SIZE_MB) * 100}%` }}
-                  />
-                </div>
-                <p>{totalSize} MB of {MAX_FILE_SIZE_MB} MB used</p>
-              </>
-            ) : (
-              <p>Click or drag up to 5 images here to upload.</p>
-            )}
-          </div>
+                </select>
+                <input
+                  ref={inputRefs.phone}
+                  id="phone"
+                  placeholder="(000)-000-0000"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  onKeyDown={(e) => handleKeyDown(e, 'phone')}
+                  maxLength="14"
+                />
+              </div>
 
-          {/* Submit Button */}
-          <button type="submit" className="submit-button" disabled={loading}>
-            {loading ? 'Submitting...' : 'Submit'}
-          </button>
-        </form>
+              {/* Description Input */}
+              <label>Description of Tattoo</label>
+              <textarea
+                ref={inputRefs.description}
+                id="description"
+                placeholder="Describe your tattoo idea"
+                value={formData.description}
+                onChange={handleChange}
+                onKeyDown={(e) => handleKeyDown(e, 'description')}
+              />
+
+              {/* File Upload Section */}
+              <label>Reference Images (Max 5 files, Total 500MB)</label>
+              <div {...getRootProps()} className={`file-dropzone-modern ${isDragActive ? 'active' : ''}`}>
+                <input {...getInputProps()} />
+                {files.length > 0 ? (
+                  <>
+                    <div className="preview-grid">
+                      {files.map((file, index) => (
+                        <div key={index} className="preview-item">
+                          <img
+                            src={file.preview}
+                            alt={`Preview ${index + 1}`}
+                            style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                          />
+                          <div className="preview-info">
+                            <p>{file.name}</p>
+                            <p>{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="file-progress-bar">
+                      <div
+                        className="file-progress"
+                        style={{ width: `${(totalSize / MAX_FILE_SIZE_MB) * 100}%` }}
+                      />
+                    </div>
+                    <p>{totalSize} MB of {MAX_FILE_SIZE_MB} MB used</p>
+                  </>
+                ) : (
+                  <p>Click or drag up to 5 images here to upload.</p>
+                )}
+              </div>
+
+              {/* Submit Button */}
+              <button type="submit" className="submit-button" disabled={loading}>
+                Submit
+              </button>
+            </form>
+          </>
+        )}
       </div>
     </section>
   );
