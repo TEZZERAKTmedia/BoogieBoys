@@ -8,8 +8,9 @@ import './contact.css';
 const MAX_FILE_SIZE_MB = 500; // 500MB limit
 
 const sanitizeInput = (input) => {
-  return input.replace(/[^\w\s@.-]/gi, '').trim(); // Removes harmful characters
+  return input.replace(/[^\w\s@.-]/gi, '');
 };
+
 
 const countryCodes = [
   { code: '+1', country: 'USA' },

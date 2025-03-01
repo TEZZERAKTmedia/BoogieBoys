@@ -14,6 +14,7 @@ const fileFilter = (req, file, cb) => {
     'image/jpeg',
     'image/png',
     'image/gif',
+    'image/webp',
     'video/mp4', // ✅ Allow MP4 files
     'video/quicktime', // ✅ .mov
     'video/x-msvideo', // ✅ .avi
