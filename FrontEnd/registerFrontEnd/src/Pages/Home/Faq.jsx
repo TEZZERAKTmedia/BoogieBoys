@@ -12,7 +12,7 @@ const FAQAppointment = () => {
 
   const faqs = [
     { question: 'How can I book an appointment?', answer: 'You can book an appointment by clicking here.', shouldLink: true, path: '/contact' },
-    { question: 'How do you handle personal information?', answer: "Boogie Boys uses top of line, industry leading, HIPAA regulated intake forms to keep you personal information safe.", shouldLink: true, path: '/contact' },
+    { question: 'How do you handle personal information?', answer: "Boogie Boys uses the HIPPA-regulated end-to-end encrytion. Keeping you personal information safe ", shouldLink: true, path: '/contact' },
     { question: 'Do you allow walk-ins?', answer: 'Boogie Boys is a private studio and works by appointment only. Schedule an appointment today!', shouldLink: true, path: '/privacy' },
     { question: 'Can I schedule a personal consultation?', answer: "If you'd like to schedule a personal consultation before scheduling a tattoo, please specify that when filling out a contact form. Feel free to include reference pictures in your message.", shouldLink: true, path: '/contact' },
   ];
