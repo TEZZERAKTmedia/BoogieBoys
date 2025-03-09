@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Jonny from "../../assets/Jonny-artist.webp";
 import Joel from "../../assets/Joel-artist.webp";
-import Bryan from "../../assets/Ben-artist-tg.webp";
+import Bryan from "../../assets/Ben-artist-tgf.webp";
 import "./artists.css";
 
 const Artist = () => {
