@@ -80,7 +80,7 @@
 
 @media (min-width: 1440px) {
   .tutorial-grid {
-    margin-top: 10%;
+    margin-top: 25%;
     grid-template-columns: repeat(6, 1fr);
   }
   .header{

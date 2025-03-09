@@ -1,6 +1,6 @@
 // src/components/LoadingPage.js
 import React, { useState, useEffect } from 'react';
-import loadingAnimation from '../../assets/Loading.png';
+import loadingAnimation from '../../assets/Loading.gif';
 import './loading-page.css';
 
 const messages = [

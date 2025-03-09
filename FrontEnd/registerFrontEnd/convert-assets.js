@@ -13,6 +13,7 @@ async function convertImagesToWebP() {
 
   for (const file of files) {
     const ext = path.extname(file).toLowerCase();
+    if (ext === '.gif') continue;
     const inputPath = path.join(assetsDir, file);
     const outputPath = path.join(assetsDir, `${path.basename(file, ext)}.webp`);
 
