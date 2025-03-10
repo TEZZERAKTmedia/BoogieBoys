@@ -2,30 +2,65 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- Use your PNG logo as the favicon -->
+
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="/assets/logo.png" />
 
-    <!-- Basic SEO meta tags -->
-    <meta name="description" content="Welcome to Boogie – the ultimate destination for creative designs and style." />
-    <meta name="keywords" content="Boogie, design, creative, style, art" />
-    <meta name="author" content="Your Name or Company" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <!-- Responsive Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 
-    <!-- Optional: Open Graph tags for social sharing -->
-    <meta property="og:title" content="Boogie" />
-    <meta property="og:description" content="Explore Boogie for the best creative designs and artistic inspiration." />
+    <!-- Canonical URL (update with your actual domain) -->
+    <link rel="canonical" href="https://boogieboys.com" />
+
+    <!-- SEO Meta Tags -->
+    <title>Boogie Boys - Premier Tattoo Studio in Thornton, CO</title>
+    <meta name="description" content="Boogie Boys is a professional tattoo studio located at 12840 Holly St, Unit 120, Thornton, CO 80602. Experience high-quality, creative tattoo artistry in Colorado." />
+    <meta name="author" content="Boogie Boys Tattoo Studio" />
+
+    <!-- Open Graph (Facebook, LinkedIn, etc.) -->
+    <meta property="og:title" content="Boogie Boys - Premier Tattoo Studio in Thornton, CO" />
+    <meta property="og:description" content="Get your next tattoo at Boogie Boys! Located in Thornton, CO, we offer high-quality custom tattoo artistry in a professional setting." />
     <meta property="og:image" content="/assets/logo.png" />
-    
-    <!-- Optional: Twitter Card tags for social sharing -->
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Boogie" />
-    <meta name="twitter:description" content="Explore Boogie for the best creative designs and artistic inspiration." />
+    <meta property="og:url" content="https://boogieboys.com" />
+    <meta property="og:type" content="business.business" />
+    <meta property="og:site_name" content="Boogie Boys" />
+
+    <!-- Twitter Card (For Twitter/X Previews) -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Boogie Boys - Premier Tattoo Studio in Thornton, CO" />
+    <meta name="twitter:description" content="Get your next tattoo at Boogie Boys! Located in Thornton, CO, we offer high-quality custom tattoo artistry in a professional setting." />
     <meta name="twitter:image" content="/assets/logo.png" />
 
-    <title>Boogie</title>
+    <!-- Structured Data (Schema.org for Local SEO & Rich Results) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TattooParlor",
+      "name": "Boogie Boys",
+      "url": "https://boogieboys.com",
+      "image": "/assets/logo.png",
+      "description": "Boogie Boys is a professional tattoo studio offering custom tattoo designs in Thornton, CO.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "12840 Holly St, Unit 120",
+        "addressLocality": "Thornton",
+        "addressRegion": "CO",
+        "postalCode": "80602",
+        "addressCountry": "US"
+      },
+      "telephone": "+1-123-456-7890", 
+      "openingHours": "Mo-Su 10:00-20:00",
+      "sameAs": [
+        "https://www.instagram.com/boogieboys",
+        "https://www.facebook.com/boogieboys"
+      ]
+    }
+    </script>
+
+    <!-- Let Vite Handle JavaScript & CSS -->
+    <script type="module" src="/src/main.jsx"></script>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
