@@ -1,7 +1,7 @@
 /* Overall page */
 .gallery-page {
     min-height: 100vh;
-    background-color: #f7f7f7;
+    background-color: var(--bg-overlay);
     position: relative;
     padding-bottom: 60px; /* Ensure space for the floating button */
   }
@@ -39,6 +39,24 @@
     cursor: pointer;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
     z-index: 100;
+  }
+  .back-to-top-btn {
+    position: fixed;
+    bottom: 80px; /* Adjust so it doesn't overlap with the Menu button */
+    right: 16px;
+    background-color: var(--btn-bg);
+    border: none;
+    color: var(--inverted-button-text);
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    z-index: 100;
+    transition: opacity 0.3s ease;
+  }
+  
+  /* Optional: Hide the button by default (handled by React state) */
+  .back-to-top-btn.hidden {
+    opacity: 0;
   }
   
   /* Modal Overlay */

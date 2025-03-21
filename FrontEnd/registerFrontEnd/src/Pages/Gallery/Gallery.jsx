@@ -33,7 +33,8 @@ const GalleryPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [filteredImages, setFilteredImages] = useState(imageData);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
   // Update filtered images when selectedCategory changes
   useEffect(() => {
@@ -42,12 +43,41 @@ const GalleryPage = () => {
         ? imageData
         : imageData.filter((img) => img.category === selectedCategory);
     setFilteredImages(updatedImages);
+    // Reset selection if current selection isn't in filteredImages
+    setSelectedImageIndex(null);
   }, [selectedCategory]);
 
-  // Handle category selection and close the modal
-  const handleSelectCategory = (category) => {
-    setSelectedCategory(category);
-    setIsMenuOpen(false);
+  // Show/hide the Back to Top button based on scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 200) {
+        setShowBackToTop(true);
+      } else {
+        setShowBackToTop(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Callbacks for navigating images
+  const handleNext = () => {
+    setSelectedImageIndex((prevIndex) =>
+      prevIndex < filteredImages.length - 1 ? prevIndex + 1 : prevIndex
+    );
+  };
+
+  const handlePrev = () => {
+    setSelectedImageIndex((prevIndex) =>
+      prevIndex > 0 ? prevIndex - 1 : prevIndex
+    );
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   };
 
   return (
@@ -59,7 +89,10 @@ const GalleryPage = () => {
             <CategoryMenu
               categoriesProp={categories}
               selected={selectedCategory}
-              onSelect={handleSelectCategory}
+              onSelect={(category) => {
+                setSelectedCategory(category);
+                setIsMenuOpen(false);
+              }}
             />
             <button className="close-modal-btn" onClick={() => setIsMenuOpen(false)}>
               Close Menu
@@ -79,19 +112,34 @@ const GalleryPage = () => {
               alt={img.category}
               className="grid-image"
               loading="lazy"
-              onClick={()=> setSelectedImage(img)}
+              onClick={() => setSelectedImageIndex(i)}
             />
           );
         })}
       </div>
-      {selectedImage && (
-        <ImageModal image={selectedImage} onClose={() => setSelectedImage(null)} />
+
+      {selectedImageIndex !== null && (
+        <ImageModal
+          image={filteredImages[selectedImageIndex]}
+          onClose={() => setSelectedImageIndex(null)}
+          onNext={handleNext}
+          onPrev={handlePrev}
+          hasNext={selectedImageIndex < filteredImages.length - 1}
+          hasPrev={selectedImageIndex > 0}
+        />
       )}
 
       {/* Floating Menu Button */}
       <button className="floating-menu-btn" onClick={() => setIsMenuOpen(true)}>
         Menu
       </button>
+
+      {/* Back To Top Button */}
+      {showBackToTop && (
+        <button className="back-to-top-btn" onClick={scrollToTop}>
+          Back to Top
+        </button>
+      )}
     </div>
   );
 };
