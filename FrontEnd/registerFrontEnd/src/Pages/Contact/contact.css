@@ -159,3 +159,63 @@
   background-color: #007bff;
   transition: width 0.3s ease;
 }
+/* Container for each preview item */
+.preview-item {
+  margin-bottom: 16px;
+}
+
+/* Container that holds the image and overlay */
+.image-overlay-container {
+  position: relative;
+}
+
+/* The preview image styling */
+.preview-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+/* Overlay styling: hidden by default, appears on hover */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Show overlay on hover */
+.image-overlay-container:hover .overlay {
+  opacity: 1;
+}
+
+/* Remove button styling */
+.remove-image-btn {
+  background-color: #e74c3c;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.remove-image-btn:hover {
+  background-color: #c0392b;
+}
+
+/* Optionally style preview-info if needed */
+.preview-info {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 0.9em;
+}
+

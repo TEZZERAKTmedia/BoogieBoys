@@ -1,16 +1,16 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useLocation } from 'react-router-dom';
+import imageCompression from 'browser-image-compression';
 import { registerApi } from '../../config/axios';
 import LoadingPage from '../../components/Loading/loading';
 import './contact.css';
 
-const MAX_FILE_SIZE_MB = 500; // 500MB limit
+const MAX_FILE_SIZE_MB = 500; // 500MB total limit
 
 const sanitizeInput = (input) => {
   return input.replace(/[^\w\s@.-]/gi, '');
 };
-
 
 const countryCodes = [
   { code: '+1', country: 'USA' },
@@ -73,60 +73,103 @@ const Contact = () => {
     }
   };
 
-  // File Upload Handling (Accept only 5 image files)
+  // File Upload Handling with image compression and WebP conversion
   const onDrop = useCallback(
-    (acceptedFiles) => {
-      const validImages = acceptedFiles.filter((file) => file.type.startsWith('image/'));
-      // Calculate how many slots are left
+    async (acceptedFiles) => {
+      // Filter for image files
+      const validImages = acceptedFiles.filter((file) =>
+        file.type.startsWith('image/')
+      );
+
+      // Calculate remaining slots (max 5 images allowed)
       const remainingSlots = 5 - files.length;
-  
       if (remainingSlots <= 0) {
         alert("You can only upload a maximum of 5 images.");
         return;
       }
-  
-      // Only add images up to the limit and assign a preview URL to each file.
-      const filesToAdd = validImages.slice(0, remainingSlots).map(file =>
-        Object.assign(file, { preview: URL.createObjectURL(file) })
-      );
-  
-      if (filesToAdd.length < validImages.length) {
-        alert("You've reached the maximum upload limit of 5 images.");
+
+      const filesToProcess = validImages.slice(0, remainingSlots);
+
+      // Options for image compression and conversion to WebP
+      const options = {
+        maxSizeMB: 1, // Compress each image to be at most ~1 MB (adjust as needed)
+        maxWidthOrHeight: 1920, // Resize if larger than 1920px
+        useWebWorker: true,
+        fileType: 'image/webp', // Convert to WebP
+      };
+
+      try {
+        const processedFiles = await Promise.all(
+          filesToProcess.map(async (file) => {
+            try {
+              const compressedFile = await imageCompression(file, options);
+              // Create a preview URL for the compressed image
+              compressedFile.preview = URL.createObjectURL(compressedFile);
+              return compressedFile;
+            } catch (error) {
+              console.error("Compression error:", error);
+              return null;
+            }
+          })
+        );
+
+        const validProcessedFiles = processedFiles.filter((file) => file !== null);
+        if (validProcessedFiles.length < filesToProcess.length) {
+          alert("Some images could not be compressed.");
+        }
+
+        const newFiles = [...files, ...validProcessedFiles];
+        const total =
+          newFiles.reduce((sum, file) => sum + file.size, 0) / (1024 * 1024);
+        setFiles(newFiles);
+        setTotalSize(total.toFixed(2));
+      } catch (err) {
+        console.error("Error processing images:", err);
       }
-  
-      const newFiles = [...files, ...filesToAdd];
-      const total = newFiles.reduce((sum, file) => sum + file.size, 0) / (1024 * 1024); // Calculate size in MB
-      setFiles(newFiles);
-      setTotalSize(total.toFixed(2));
     },
     [files]
   );
-  
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     multiple: true,
     maxSize: MAX_FILE_SIZE_MB * 1024 * 1024, // 500MB total limit
-    accept: { 'image/*': [] }, // Only allow images
+    accept: { 'image/*': [] },
   });
 
   // Check if an image was passed from the Home component and convert it to a File object.
   useEffect(() => {
     if (location.state?.attachedImage) {
       const imageURL = location.state.attachedImage;
-      // Avoid duplicate addition if the file is already added (using preview property)
+      // Avoid duplicate addition if the file is already added
       if (!files.find((f) => f.preview === imageURL)) {
         fetch(imageURL)
-          .then(res => res.blob())
-          .then(blob => {
+          .then((res) => res.blob())
+          .then(async (blob) => {
+            // Create a File object from the blob
             const filename = imageURL.split('/').pop();
             const file = new File([blob], filename, { type: blob.type });
-            file.preview = imageURL;
-            const updatedFiles = [...files, file];
-            setFiles(updatedFiles);
-            const total = updatedFiles.reduce((sum, f) => sum + f.size, 0) / (1024 * 1024);
-            setTotalSize(total.toFixed(2));
+            // Compress and convert the attached image as well
+            const options = {
+              maxSizeMB: 1,
+              maxWidthOrHeight: 1920,
+              useWebWorker: true,
+              fileType: 'image/webp',
+            };
+            try {
+              const compressedFile = await imageCompression(file, options);
+              compressedFile.preview = imageURL; // Use original URL for preview if desired
+              const updatedFiles = [...files, compressedFile];
+              setFiles(updatedFiles);
+              const total =
+                updatedFiles.reduce((sum, f) => sum + f.size, 0) /
+                (1024 * 1024);
+              setTotalSize(total.toFixed(2));
+            } catch (error) {
+              console.error("Failed to compress attached image:", error);
+            }
           })
-          .catch(err => console.error("Failed to attach image:", err));
+          .catch((err) => console.error("Failed to attach image:", err));
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -134,8 +177,18 @@ const Contact = () => {
 
   // Clean up preview URLs to avoid memory leaks
   useEffect(() => {
-    return () => files.forEach(file => URL.revokeObjectURL(file.preview));
+    return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
   }, [files]);
+
+  // Remove a file from the preview list
+  const handleRemoveFile = (indexToRemove) => {
+    const updatedFiles = files.filter((_, index) => index !== indexToRemove);
+    setFiles(updatedFiles);
+    const total =
+      updatedFiles.reduce((sum, file) => sum + file.size, 0) /
+      (1024 * 1024);
+    setTotalSize(total.toFixed(2));
+  };
 
   // Submit the form
   const handleSubmit = async (e) => {
@@ -152,14 +205,30 @@ const Contact = () => {
     setLoading(true);
     try {
       const formDataToSend = new FormData();
-      Object.entries(formData).forEach(([key, value]) => formDataToSend.append(key, value));
-      files.forEach((file) => formDataToSend.append('files', file, file.name));
+      Object.entries(formData).forEach(([key, value]) =>
+        formDataToSend.append(key, value)
+      );
+      files.forEach((file) =>
+        formDataToSend.append('files', file, file.name)
+      );
 
       const response = await registerApi.post('/register-contact', formDataToSend, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
       alert(response.data.message);
+
+      // Clear the form after successful submission
+      setFormData({
+        name: '',
+        email: '',
+        countryCode: '+1',
+        phone: '',
+        description: '',
+      });
+      setFiles([]);
+      setTotalSize(0);
+      setFormErrors({});
     } catch (error) {
       console.error('Error submitting:', error);
       alert('There was an error sending your message.');
@@ -206,7 +275,9 @@ const Contact = () => {
               <div className="phone-container">
                 <select
                   value={formData.countryCode}
-                  onChange={(e) => setFormData({ ...formData, countryCode: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, countryCode: e.target.value })
+                  }
                 >
                   {countryCodes.map((country) => (
                     <option key={country.code} value={country.code}>
@@ -238,32 +309,47 @@ const Contact = () => {
 
               {/* File Upload Section */}
               <label>Reference Images (Max 5 files, Total 500MB)</label>
-              <div {...getRootProps()} className={`file-dropzone-modern ${isDragActive ? 'active' : ''}`}>
+              <div
+                {...getRootProps()}
+                className={`file-dropzone-modern ${
+                  isDragActive ? 'active' : ''
+                }`}
+              >
                 <input {...getInputProps()} />
                 {files.length > 0 ? (
                   <>
                     <div className="preview-grid">
                       {files.map((file, index) => (
                         <div key={index} className="preview-item">
-                          <img
-                            src={file.preview}
-                            alt={`Preview ${index + 1}`}
-                            style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
-                          />
+                          <div className="image-overlay-container">
+                            <img
+                              src={file.preview}
+                              alt={`Preview ${index + 1}`}
+                              className="preview-image"
+                            />
+                            <div className="overlay">
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation(); // Prevent dropzone click
+                                  handleRemoveFile(index);
+                                }}
+                                className="remove-image-btn"
+                              >
+                                Remove
+                              </button>
+                            </div>
+                          </div>
                           <div className="preview-info">
                             <p>{file.name}</p>
-                            <p>{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
+                            <p>
+                              {(file.size / (1024 * 1024)).toFixed(2)} MB
+                            </p>
                           </div>
                         </div>
                       ))}
                     </div>
-                    <div className="file-progress-bar">
-                      <div
-                        className="file-progress"
-                        style={{ width: `${(totalSize / MAX_FILE_SIZE_MB) * 100}%` }}
-                      />
-                    </div>
-                    <p>{totalSize} MB of {MAX_FILE_SIZE_MB} MB used</p>
+                    {/* Optionally, include a progress bar or size info here */}
                   </>
                 ) : (
                   <p>Click or drag up to 5 images here to upload.</p>

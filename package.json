@@ -8,13 +8,11 @@
     "start:backend": "concurrently  \"npm run start:shop\"",
     "start:frontend": "concurrently \"npm run start:main-frontend\" \"npm run start:admin-frontend\" \"npm run start:user-frontend\"",
     "start:shop": "cd Backend && NODE_ENV=development node server.js",
-    "start:main-frontend": "cd FrontEnd/adminFrontEnd && npm run dev",
-    "start:admin-frontend": "cd FrontEnd/registerFrontEnd && npm run dev",
-    "start:user-frontend": "cd FrontEnd/userFrontEnd && npm run dev",
+    "start:main-frontend": "cd FrontEnd/registerFrontEnd && npm run dev",
+    
     "build": "npm run build:main-frontend && npm run build:admin-frontend && npm run build:user-frontend",
-    "build:main-frontend": "cd FrontEnd/adminFrontEnd && npm run build",
-    "build:admin-frontend": "cd FrontEnd/registerFrontEnd && npm run build",
-    "build:user-frontend": "cd FrontEnd/userFrontEnd && npm run build"
+    "build:main-frontend": "cd FrontEnd/registerFrontEnd && npm run build"
+    
   },
   "author": "",
   "license": "ISC",

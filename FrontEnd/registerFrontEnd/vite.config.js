@@ -7,23 +7,25 @@ export default defineConfig({
     react(),
     viteImagemin({
       gifsicle: {
-        optimizationLevel: 3,  // Optimize GIFs
-        colors: 256,  // Reduce colors
-        interlaced: false,  // Disable interlacing for smaller size
+        optimizationLevel: 3, // Optimize GIFs
       },
       mozjpeg: {
-        quality: 25,  // Lower JPG quality for better compression
+        quality: 10, // **Lower JPEG quality for extreme compression**
+        progressive: true, // Progressive loading for faster appearance
       },
       pngquant: {
-        quality: [0.2, 0.4],  // Lower PNG quality
+        quality: [0.1, 0.3], // **Lower PNG quality even further**
+        speed: 1, // Maximum compression (slower but better)
       },
       svgo: {
-        plugins: [{ removeViewBox: false }],  // Optimize SVGs
+        plugins: [{ removeViewBox: false }], // Optimize SVGs
       },
       webp: {
-        quality: 20,  // Reduce WebP quality even more (lower = smaller files)
-        method: 6,  // Use best compression (0 = fast, 6 = slowest but best)
-        nearLossless: 0,  // Fully lossy compression for smallest file size
+        quality: 5, // **Ultra-small file size**
+        method: 6, // Best compression efficiency (0-6)
+        lossless: false, // **Lossy compression for best size reduction**
+        nearLossless: 80, // **Balance size & quality**
+        smartSubsample: true, // Improved color handling at low quality
       },
     }),
   ],

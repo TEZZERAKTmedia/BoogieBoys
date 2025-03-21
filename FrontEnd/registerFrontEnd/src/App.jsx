@@ -7,6 +7,7 @@ import Shop from './Pages/Store/Shop.jsx';
 import Artist from './Pages/Artists/Artists.jsx';
 import Privacy from './Pages/Privacy/Privacy.jsx';
 import Design from './Pages/Designs/Designs.jsx';
+import Gallery from './Pages/Gallery/Gallery.jsx'; 
 
 import './App.css';
 const preloadGif = new Image();
@@ -24,7 +25,7 @@ function App() {
         <Route path="/appointments"  />
         <Route path="/contact" element={<Contact/>} />
         <Route path="/privacy" element={<Privacy />} />
-
+        <Route path="/gallery" element={<Gallery />} />
 
         {/* Tattoo AfterCare Route */}
         <Route path="/aftercare" element={<AfterCare />} />

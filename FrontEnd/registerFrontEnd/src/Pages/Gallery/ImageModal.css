@@ -1,0 +1,98 @@
+.gallery-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .gallery-modal-content {
+    position: relative;
+    background: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+  
+  .gallery-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
+  .gallery-modal-image {
+    width: 100%;
+    max-height: 50vh; /* Limit the image to 50% of viewport height */
+    object-fit: contain;
+    margin-bottom: 16px;
+  }
+  
+  .gallery-modal-share {
+    display: flex;
+    justify-content: center; /* Centers share icons horizontally */
+    align-items: center;     /* Centers icons vertically */
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  
+  .gallery-modal-share button {
+    padding: 8px 12px;
+    background-color: var(--inverted-button-bg);
+    border: none;
+    color: var(--inverted-button-text);
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .gallery-modal-share button:hover {
+    background-color: #0056b3;
+  }
+  
+  .gallery-modal-ad {
+    border: 1px solid #ddd;
+    padding: 16px;
+    text-align: center;
+    flex-shrink: 0; /* Prevent the ad from shrinking */
+  }
+  
+  /* Responsive adjustments for small devices */
+  @media (max-width: 480px) {
+    .gallery-modal-content {
+      padding: 5px;
+      width: 95%;
+      max-width: none;
+      max-height: 95vh;
+    }
+    
+    .gallery-modal-close {
+      font-size: 1.2rem;
+      top: 5px;
+      right: 5px;
+    }
+    
+    .gallery-modal-share button {
+      padding: 6px 10px;
+      font-size: 0.9rem;
+    }
+    
+    .gallery-modal-ad {
+      padding: 12px;
+      font-size: 0.9rem;
+    }
+  }
+  
