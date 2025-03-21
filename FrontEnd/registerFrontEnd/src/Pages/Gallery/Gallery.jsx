@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import CategoryMenu from './GalleryMenu';
 import ImageModal from './ImageModal';
+import ParallaxImage from './components/parallaxImage';
 import './GalleryPage.css';
 
 // Your custom categories — these should match your folder names
@@ -50,11 +51,7 @@ const GalleryPage = () => {
   // Show/hide the Back to Top button based on scroll position
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 200) {
-        setShowBackToTop(true);
-      } else {
-        setShowBackToTop(false);
-      }
+      setShowBackToTop(window.scrollY > 200);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -76,9 +73,15 @@ const GalleryPage = () => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   };
+
+  // Create random parallax factors for each image (range: -30 to 30 pixels)
+  const parallaxFactors = useMemo(
+    () => filteredImages.map(() => Math.random() * 60 - 30),
+    [filteredImages]
+  );
 
   return (
     <div className="gallery-page">
@@ -101,17 +104,16 @@ const GalleryPage = () => {
         </div>
       )}
 
-      {/* Grid of Images */}
+      {/* Grid of Images using ParallaxImage */}
       <div className="image-grid">
         {filteredImages.map((img, i) => {
           const keyPart = `${img.category}-${img.src}-${i}`;
           return (
-            <img
+            <ParallaxImage
               key={keyPart}
               src={img.src}
               alt={img.category}
-              className="grid-image"
-              loading="lazy"
+              factor={parallaxFactors[i]}
               onClick={() => setSelectedImageIndex(i)}
             />
           );
