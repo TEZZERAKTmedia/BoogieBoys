@@ -79,30 +79,7 @@ const ImageModal = ({ image, onClose, onNext, onPrev, hasNext, hasPrev }) => {
             aria-label="Share on Facebook"
           >
             <FaFacebookF size={24} />
-          </button>
-          {/* Twitter */}
-          <button
-            onClick={() =>
-              window.open(
-                `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${shareText}`,
-                '_blank'
-              )
-            }
-            aria-label="Share on Twitter"
-          >
-            <FaTwitter size={24} />
-          </button>
-          {/* LinkedIn */}
-          <button
-            onClick={() =>
-              window.open(
-                `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(shareUrl)}`,
-                '_blank'
-              )
-            }
-            aria-label="Share on LinkedIn"
-          >
-            <FaLinkedinIn size={24} />
+  
           </button>
           {/* Pinterest */}
           <button
@@ -120,32 +97,17 @@ const ImageModal = ({ image, onClose, onNext, onPrev, hasNext, hasPrev }) => {
           <button
             onClick={() =>
               window.open(
-                `https://api.whatsapp.com/send?text=${shareText}%20${encodeURIComponent(shareUrl)}`,
+                `https://www.instagram.com/xboogieboysx/`,
                 '_blank'
               )
             }
             aria-label="Share on WhatsApp"
           >
-            <FaWhatsapp size={24} />
-          </button>
-          {/* Instagram (opens Instagram homepage) */}
-          <button
-            onClick={() =>
-              window.open('https://www.instagram.com', '_blank')
-            }
-            aria-label="Share on Instagram"
-          >
+            
             <FaInstagram size={24} />
           </button>
           {/* Snapchat (opens Snapchat homepage) */}
-          <button
-            onClick={() =>
-              window.open('https://www.snapchat.com', '_blank')
-            }
-            aria-label="Share on Snapchat"
-          >
-            <FaSnapchatGhost size={24} />
-          </button>
+          
           {/* Native Share (using Web Share API) */}
           <button onClick={handleNativeShare} aria-label="Native Share">
             <FaShareAlt size={24} />
