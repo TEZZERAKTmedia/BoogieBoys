@@ -104,7 +104,7 @@ const ImageModal = ({ image, onClose, onNext, onPrev, hasNext, hasPrev }) => {
           >
             <FaWhatsapp size={24} />
           </button>
-          {/* Instagram (No direct share URL; opens Instagram homepage) */}
+          {/* Instagram (opens Instagram homepage) */}
           <button
             onClick={() =>
               window.open('https://www.instagram.com', '_blank')
@@ -113,7 +113,7 @@ const ImageModal = ({ image, onClose, onNext, onPrev, hasNext, hasPrev }) => {
           >
             <FaInstagram size={24} />
           </button>
-          {/* Snapchat (No direct share URL; opens Snapchat homepage) */}
+          {/* Snapchat (opens Snapchat homepage) */}
           <button
             onClick={() =>
               window.open('https://www.snapchat.com', '_blank')
