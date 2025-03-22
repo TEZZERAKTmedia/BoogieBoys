@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import CategoryMenu from './GalleryMenu';
 import ImageModal from './ImageModal';
 import ParallaxImage from './components/parallaxImage';
 import './GalleryPage.css';
 
-// Your custom categories — these should match your folder names
 const categories = [
   'All',
   'Abstract Black',
@@ -13,19 +13,16 @@ const categories = [
   'Dotwork',
 ];
 
-// Vite dynamic import: gets all images from subfolders in /assets
 const allImages = import.meta.glob('../../assets/*/*.{jpg,jpeg,png,webp}', {
   eager: true,
   import: 'default',
 });
 
-// Helper to extract folder name (i.e. category) from file path
 const getCategoryFromPath = (path) => {
   const parts = path.split('/');
   return parts.length > 2 ? decodeURIComponent(parts[parts.length - 2]) : 'Unknown';
 };
 
-// Convert imported files to an array of { src, category }
 const imageData = Object.entries(allImages)
   .map(([path, src]) => ({ src, category: getCategoryFromPath(path) }))
   .filter((img) => img.src && img.category);
@@ -37,18 +34,30 @@ const GalleryPage = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [showBackToTop, setShowBackToTop] = useState(false);
 
-  // Update filtered images when selectedCategory changes
+  const navigate = useNavigate();
+  const location = useLocation();
+
   useEffect(() => {
     const updatedImages =
       selectedCategory === 'All'
         ? imageData
         : imageData.filter((img) => img.category === selectedCategory);
     setFilteredImages(updatedImages);
-    // Reset selection if current selection isn't in filteredImages
     setSelectedImageIndex(null);
-  }, [selectedCategory]);
 
-  // Show/hide the Back to Top button based on scroll position
+    const params = new URLSearchParams(location.search);
+    const imageParam = params.get('image');
+
+    if (imageParam) {
+      const index = updatedImages.findIndex((img) =>
+        img.src.includes(decodeURIComponent(imageParam))
+      );
+      if (index !== -1) {
+        setSelectedImageIndex(index);
+      }
+    }
+  }, [selectedCategory, location.search]);
+
   useEffect(() => {
     const handleScroll = () => {
       setShowBackToTop(window.scrollY > 200);
@@ -57,17 +66,28 @@ const GalleryPage = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Callbacks for navigating images
   const handleNext = () => {
-    setSelectedImageIndex((prevIndex) =>
-      prevIndex < filteredImages.length - 1 ? prevIndex + 1 : prevIndex
-    );
+    setSelectedImageIndex((prevIndex) => {
+      const nextIndex = prevIndex < filteredImages.length - 1 ? prevIndex + 1 : prevIndex;
+      const nextImage = filteredImages[nextIndex];
+      if (nextImage) {
+        const imageName = encodeURIComponent(nextImage.src.split('/').pop());
+        navigate(`?image=${imageName}`, { replace: false });
+      }
+      return nextIndex;
+    });
   };
 
   const handlePrev = () => {
-    setSelectedImageIndex((prevIndex) =>
-      prevIndex > 0 ? prevIndex - 1 : prevIndex
-    );
+    setSelectedImageIndex((prevIndex) => {
+      const prevIndexUpdated = prevIndex > 0 ? prevIndex - 1 : prevIndex;
+      const prevImage = filteredImages[prevIndexUpdated];
+      if (prevImage) {
+        const imageName = encodeURIComponent(prevImage.src.split('/').pop());
+        navigate(`?image=${imageName}`, { replace: false });
+      }
+      return prevIndexUpdated;
+    });
   };
 
   const scrollToTop = () => {
@@ -77,7 +97,6 @@ const GalleryPage = () => {
     });
   };
 
-  // Create random parallax factors for each image (range: -30 to 30 pixels)
   const parallaxFactors = useMemo(
     () => filteredImages.map(() => Math.random() * 60 - 30),
     [filteredImages]
@@ -85,7 +104,6 @@ const GalleryPage = () => {
 
   return (
     <div className="gallery-page">
-      {/* Modal for Category Menu */}
       {isMenuOpen && (
         <div className="modal">
           <div className="modal-content">
@@ -104,7 +122,6 @@ const GalleryPage = () => {
         </div>
       )}
 
-      {/* Grid of Images using ParallaxImage */}
       <div className="image-grid">
         {filteredImages.map((img, i) => {
           const keyPart = `${img.category}-${img.src}-${i}`;
@@ -114,7 +131,11 @@ const GalleryPage = () => {
               src={img.src}
               alt={img.category}
               factor={parallaxFactors[i]}
-              onClick={() => setSelectedImageIndex(i)}
+              onClick={() => {
+                setSelectedImageIndex(i);
+                const imageName = encodeURIComponent(img.src.split('/').pop());
+                navigate(`?image=${imageName}`, { replace: false });
+              }}
             />
           );
         })}
@@ -123,7 +144,10 @@ const GalleryPage = () => {
       {selectedImageIndex !== null && (
         <ImageModal
           image={filteredImages[selectedImageIndex]}
-          onClose={() => setSelectedImageIndex(null)}
+          onClose={() => {
+            setSelectedImageIndex(null);
+            navigate('', { replace: true });
+          }}
           onNext={handleNext}
           onPrev={handlePrev}
           hasNext={selectedImageIndex < filteredImages.length - 1}
@@ -131,12 +155,10 @@ const GalleryPage = () => {
         />
       )}
 
-      {/* Floating Menu Button */}
       <button className="floating-menu-btn" onClick={() => setIsMenuOpen(true)}>
         Menu
       </button>
 
-      {/* Back To Top Button */}
       {showBackToTop && (
         <button className="back-to-top-btn" onClick={scrollToTop}>
           Back to Top
