@@ -1,30 +1,47 @@
-// GoogleAds.jsx
 import React, { useEffect, useRef } from 'react';
 
-function GoogleAds() {
-  const initializedRef = useRef(false);
+const GoogleAds = () => {
+  const adRef = useRef(null);
 
   useEffect(() => {
-    // If we've never initialized this ad before...
-    if (!initializedRef.current && window.adsbygoogle) {
-      console.log('[GoogleAds] Initializing ad...');
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-      initializedRef.current = true;
+    const pushAd = () => {
+      try {
+        if (window.adsbygoogle && adRef.current) {
+          console.log('Pushing AdSense ad');
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+        }
+      } catch (e) {
+        console.error('AdSense push error:', e);
+      }
+    };
+
+    // If the script is already loaded, push ad
+    if (window.adsbygoogle) {
+      pushAd();
     } else {
-      console.log('[GoogleAds] Ad already initialized or adsbygoogle missing');
+      // Wait for script to load before pushing
+      const interval = setInterval(() => {
+        if (window.adsbygoogle) {
+          clearInterval(interval);
+          pushAd();
+        }
+      }, 300);
     }
   }, []);
 
   return (
-    <ins
-      className="adsbygoogle"
-      style={{ display: 'block', zIndex: 9999 }}
-      data-ad-client="ca-pub-6576065685482347"
-      data-ad-slot="3109766104"
-      data-ad-format="auto"
-      data-full-width-responsive="true"
-    />
+    <div style={{ margin: '1rem 0', textAlign: 'center' }}>
+      <ins
+        ref={adRef}
+        className="adsbygoogle"
+        style={{ display: 'block' }}
+        data-ad-client="ca-pub-6576065685482347"
+        data-ad-slot="3109766104"
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      ></ins>
+    </div>
   );
-}
+};
 
 export default GoogleAds;
