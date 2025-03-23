@@ -19,8 +19,8 @@ function GoogleAds() {
     <ins
       className="adsbygoogle"
       style={{ display: 'block' }}
-      data-ad-client="ca-pub-XXXX"
-      data-ad-slot="XXXX"
+      data-ad-client="ca-pub-6576065685482347"
+      data-ad-slot="3109766104"
       data-ad-format="auto"
       data-full-width-responsive="true"
     />
