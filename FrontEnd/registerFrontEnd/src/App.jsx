@@ -9,6 +9,7 @@ import Privacy from './Pages/Privacy/Privacy.jsx';
 import Design from './Pages/Designs/Designs.jsx';
 import Gallery from './Pages/Gallery/Gallery.jsx'; 
 
+
 import './App.css';
 const preloadGif = new Image();
 preloadGif.src = './assetsboogieboys.gif';
@@ -16,6 +17,7 @@ function App() {
   return (
     <Router>
       <Navbar />
+      
       <Routes>
         {/* Home Route */}
         <Route path="/" element={<Home />} />
