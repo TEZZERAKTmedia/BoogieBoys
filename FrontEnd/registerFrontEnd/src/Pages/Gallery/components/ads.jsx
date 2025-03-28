@@ -1,35 +1,35 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
-const GoogleAds = () => {
+const GoogleAdTest = () => {
   const adRef = useRef(null);
 
   useEffect(() => {
-    const adElement = adRef.current;
-
-    // Check if the ad has already been rendered
-    if (adElement && !adElement.getAttribute('data-ad-status')) {
-      try {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-        adElement.setAttribute('data-ad-status', 'done'); // Mark as rendered
-      } catch (e) {
-        console.error('AdSense push error:', e);
+    const timeout = setTimeout(() => {
+      if (window.adsbygoogle && adRef.current) {
+        try {
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+          console.log('✅ Ad pushed after delay');
+        } catch (e) {
+          console.error('❌ Ad push error:', e);
+        }
       }
-    }
+    }, 500); // Delay push to allow animations to complete
+
+    return () => clearTimeout(timeout);
   }, []);
 
   return (
-    <div style={{ margin: '1rem 0', textAlign: 'center' }}>
+    <div style={{ textAlign: 'center', border: '2px dashed green', padding: '20px' }}>
       <ins
         ref={adRef}
         className="adsbygoogle"
-        style={{ display: 'block' }}
-        data-ad-client="ca-pub-6576065685482347"
-        data-ad-slot="3109766104"
-        data-ad-format="auto"
-        data-full-width-responsive="true"
-      />
+        style={{ display: 'block', width: '300px', height: '250px' }}
+        data-ad-client="ca-pub-3940256099942544"
+        data-ad-slot="6300978111"
+        data-adtest="on"
+      ></ins>
     </div>
   );
 };
 
-export default GoogleAds;
+export default GoogleAdTest;

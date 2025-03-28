@@ -113,10 +113,11 @@ const ImageModal = ({ image, onClose, onNext, onPrev, hasNext, hasPrev }) => {
             <FaShareAlt size={24} />
           </button>
         </div>
-        <div className="gallery-modal-ad">
-          <GoogleAds />
-        </div>
+        <GoogleAds />
       </div>
+      
+         
+        
     </div>
   );
 };
