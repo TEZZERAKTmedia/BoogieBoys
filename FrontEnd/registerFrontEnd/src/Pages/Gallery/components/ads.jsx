@@ -4,28 +4,16 @@ const GoogleAds = () => {
   const adRef = useRef(null);
 
   useEffect(() => {
-    const pushAd = () => {
+    const adElement = adRef.current;
+
+    // Check if the ad has already been rendered
+    if (adElement && !adElement.getAttribute('data-ad-status')) {
       try {
-        if (window.adsbygoogle && adRef.current) {
-          console.log('Pushing AdSense ad');
-          (window.adsbygoogle = window.adsbygoogle || []).push({});
-        }
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+        adElement.setAttribute('data-ad-status', 'done'); // Mark as rendered
       } catch (e) {
         console.error('AdSense push error:', e);
       }
-    };
-
-    // If the script is already loaded, push ad
-    if (window.adsbygoogle) {
-      pushAd();
-    } else {
-      // Wait for script to load before pushing
-      const interval = setInterval(() => {
-        if (window.adsbygoogle) {
-          clearInterval(interval);
-          pushAd();
-        }
-      }, 300);
     }
   }, []);
 
@@ -39,7 +27,7 @@ const GoogleAds = () => {
         data-ad-slot="3109766104"
         data-ad-format="auto"
         data-full-width-responsive="true"
-      ></ins>
+      />
     </div>
   );
 };
