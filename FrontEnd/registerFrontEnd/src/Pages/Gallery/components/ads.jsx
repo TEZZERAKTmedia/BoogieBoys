@@ -7,6 +7,8 @@ const GoogleAdTest = () => {
     const timeout = setTimeout(() => {
       if (window.adsbygoogle && adRef.current) {
         try {
+          console.log('Ad is visible?', adRef.current?.offsetParent !== null);
+
           (window.adsbygoogle = window.adsbygoogle || []).push({});
           console.log('✅ Ad pushed after delay');
         } catch (e) {
@@ -24,9 +26,9 @@ const GoogleAdTest = () => {
         ref={adRef}
         className="adsbygoogle"
         style={{ display: 'block', width: '300px', height: '250px' }}
-        data-ad-client="ca-pub-3940256099942544"
-        data-ad-slot="6300978111"
-        data-adtest="on"
+        data-ad-client="ca-pub-6576065685482347"
+        data-ad-slot="2657816874"
+        data-ad-format="auto"
       ></ins>
     </div>
   );
