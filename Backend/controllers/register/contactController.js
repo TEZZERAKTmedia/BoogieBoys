@@ -1,4 +1,3 @@
-
 require('dotenv').config({ path: require('path').resolve(__dirname, '../../.env') });
 
 const multer = require('multer');
@@ -48,7 +47,7 @@ const transporter = nodemailer.createTransport({
   debug: false,
 });
 
-// ✅ Contact form controller
+// ✅ Contact form controller with additional user confirmation email
 const handleContactForm = async (req, res) => {
   try {
     console.log('Received Form Data:', req.body);
@@ -68,63 +67,79 @@ const handleContactForm = async (req, res) => {
       contentType: file.mimetype,
     }));
 
-    // Prepare email content
-    const emailContent = `
-  <div style="font-family: 'Arial', sans-serif; background-color: #f4f4f4; padding: 20px;">
-    <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); overflow: hidden;">
-      <!-- Logo Section -->
-      <div style="background-color: #000; padding: 20px; text-align: center;">
-        <img src="https://boogieboys.com/logo.png" alt="Boogie Boys Logo" style="max-width: 200px; height: auto;">
+    // Prepare email content for admin
+    const adminEmailContent = `
+      <div style="font-family: 'Arial', sans-serif; background-color: #f4f4f4; padding: 20px;">
+        <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); overflow: hidden;">
+          <!-- Logo Section -->
+          <div style="background-color: #000; padding: 20px; text-align: center;">
+            <img src="https://boogieboys.com/logo.png" alt="Boogie Boys Logo" style="max-width: 200px; height: auto;">
+          </div>
+          <!-- Main Content Section -->
+          <div style="padding: 30px;">
+            <h1 style="font-size: 24px; color: #333; border-bottom: 1px solid #e0e0e0; padding-bottom: 10px;">New Contact Form Submission</h1>
+            <p style="font-size: 16px; color: #555; border-bottom: 1px solid #e0e0e0; padding-bottom: 10px;">
+              <strong>Name:</strong> ${name}
+            </p>
+            <p style="font-size: 16px; color: #555; border-bottom: 1px solid #e0e0e0; padding-bottom: 10px;">
+              <strong>Email:</strong> ${email}
+            </p>
+            <p style="font-size: 16px; color: #555; border-bottom: 1px solid #e0e0e0; padding-bottom: 10px;">
+              <strong>Phone:</strong> ${phone}
+            </p>
+            <p style="font-size: 16px; color: #555; border-bottom: 1px solid #e0e0e0; padding-bottom: 10px;">
+              <strong>Description:</strong> ${description}
+            </p>
+            ${
+              attachments.length > 0
+                ? `<p style="font-size: 16px; color: #555; border-bottom: 1px solid #e0e0e0; padding-bottom: 10px;">
+                    <strong>Uploaded Files:</strong> ${attachments.map((file) => file.filename).join(', ')}
+                  </p>`
+                : ''
+            }
+            <!-- Footer -->
+            <p style="font-size: 12px; color: #888; text-align: center; margin-top: 30px; border-top: 1px solid #e0e0e0; padding-top: 20px;">
+              This email was sent from the Boogie Boys appointment form. Please do not reply directly to this message.
+            </p>
+          </div>
+        </div>
       </div>
+    `;
 
-      <!-- Main Content Section -->
-      <div style="padding: 30px;">
-        <h1 style="font-size: 24px; color: #333; border-bottom: 1px solid #e0e0e0; padding-bottom: 10px;">New Contact Form Submission</h1>
-        
-        <p style="font-size: 16px; color: #555; border-bottom: 1px solid #e0e0e0; padding-bottom: 10px;">
-          <strong>Name:</strong> ${name}
-        </p>
-
-        <p style="font-size: 16px; color: #555; border-bottom: 1px solid #e0e0e0; padding-bottom: 10px;">
-          <strong>Email:</strong> ${email}
-        </p>
-
-        <p style="font-size: 16px; color: #555; border-bottom: 1px solid #e0e0e0; padding-bottom: 10px;">
-          <strong>Phone:</strong> ${phone}
-        </p>
-
-        <p style="font-size: 16px; color: #555; border-bottom: 1px solid #e0e0e0; padding-bottom: 10px;">
-          <strong>Description:</strong> ${description}
-        </p>
-
-        ${
-          attachments.length > 0
-            ? `<p style="font-size: 16px; color: #555; border-bottom: 1px solid #e0e0e0; padding-bottom: 10px;">
-                <strong>Uploaded Files:</strong> ${attachments.map((file) => file.filename).join(', ')}
-              </p>`
-            : ''
-        }
-
-        <!-- Footer -->
-        <p style="font-size: 12px; color: #888; text-align: center; margin-top: 30px; border-top: 1px solid #e0e0e0; padding-top: 20px;">
-          This email was sent from the Boogie Boys appointment form. Please do not reply directly to this message.
-        </p>
-      </div>
-    </div>
-  </div>
-`;
-
-    // Send email
+    // Prepare mail options for admin
     let mailOptions = {
       from: `"Boogie Boys" <${process.env.EMAIL_USER}>`,
-      to: process.env.ADMIN_EMAIL,
+      to: process.env.ADMIN_EMAIL, // Admin email address
       subject: `New Appointment Request from ${name}`,
-      html: emailContent,
+      html: adminEmailContent,
       attachments,
     };
 
-    let info = await transporter.sendMail(mailOptions);
-    console.log('Email sent successfully:', info.messageId);
+    let adminInfo = await transporter.sendMail(mailOptions);
+    console.log('Admin email sent successfully:', adminInfo.messageId);
+
+    // Prepare confirmation email content for user
+    const userEmailContent = `
+      <div style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
+        <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
+          <div style="padding: 20px; text-align: center;">
+            <h1 style="font-size: 22px; color: #333;">Thank you for your submission!</h1>
+            <p style="font-size: 16px; color: #555;">Dear ${name}, we have received your appointment request and will get back to you soon.</p>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Prepare mail options for user confirmation
+    let userMailOptions = {
+      from: `"Boogie Boys" <${process.env.EMAIL_USER}>`,
+      to: email, // User's email address from form submission
+      subject: "We Received Your Appointment Request",
+      html: userEmailContent,
+    };
+
+    let userInfo = await transporter.sendMail(userMailOptions);
+    console.log('User confirmation email sent successfully:', userInfo.messageId);
 
     res.status(200).json({ message: 'Your message has been sent successfully.' });
   } catch (error) {

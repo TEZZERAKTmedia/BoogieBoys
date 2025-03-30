@@ -22,7 +22,7 @@ const allowedOrigins =
     process.env.USER_FRONTEND, 
     process.env.ADMIN_FRONTEND, 
     process.env.REGISTER_FRONTEND, 
-    'http://localhost:8080'
+    
   ];
 
 if (process.env.NODE_ENV !== 'production') {

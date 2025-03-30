@@ -39,6 +39,8 @@ const Contact = () => {
   const [formErrors, setFormErrors] = useState({});
   const [files, setFiles] = useState([]);
   const [totalSize, setTotalSize] = useState(0);
+  const [submittedEmail, setSubmittedEmail] = useState('');
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
   // Manage input focusing
   const inputRefs = {
@@ -48,20 +50,13 @@ const Contact = () => {
     description: useRef(),
   };
 
-  // Handle form field changes with sanitization
   const handleChange = (e) => {
     const { id, value } = e.target;
-    let sanitizedValue = sanitizeInput(value);
-
-    if (id === 'phone') {
-      sanitizedValue = formatPhoneNumber(sanitizedValue);
-    }
-
+    const sanitizedValue = id === 'phone' ? formatPhoneNumber(sanitizeInput(value)) : sanitizeInput(value);
     setFormData((prev) => ({ ...prev, [id]: sanitizedValue }));
     setFormErrors((prev) => ({ ...prev, [id]: false }));
   };
 
-  // Handle "Enter" key for input focus
   const handleKeyDown = (e, currentField) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -73,15 +68,12 @@ const Contact = () => {
     }
   };
 
-  // File Upload Handling with image compression and WebP conversion
   const onDrop = useCallback(
     async (acceptedFiles) => {
-      // Filter for image files
       const validImages = acceptedFiles.filter((file) =>
         file.type.startsWith('image/')
       );
 
-      // Calculate remaining slots (max 5 images allowed)
       const remainingSlots = 5 - files.length;
       if (remainingSlots <= 0) {
         alert("You can only upload a maximum of 5 images.");
@@ -89,13 +81,11 @@ const Contact = () => {
       }
 
       const filesToProcess = validImages.slice(0, remainingSlots);
-
-      // Options for image compression and conversion to WebP
       const options = {
-        maxSizeMB: 1, // Compress each image to be at most ~1 MB (adjust as needed)
-        maxWidthOrHeight: 1920, // Resize if larger than 1920px
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1920,
         useWebWorker: true,
-        fileType: 'image/webp', // Convert to WebP
+        fileType: 'image/webp',
       };
 
       try {
@@ -103,7 +93,6 @@ const Contact = () => {
           filesToProcess.map(async (file) => {
             try {
               const compressedFile = await imageCompression(file, options);
-              // Create a preview URL for the compressed image
               compressedFile.preview = URL.createObjectURL(compressedFile);
               return compressedFile;
             } catch (error) {
@@ -112,15 +101,12 @@ const Contact = () => {
             }
           })
         );
-
         const validProcessedFiles = processedFiles.filter((file) => file !== null);
         if (validProcessedFiles.length < filesToProcess.length) {
           alert("Some images could not be compressed.");
         }
-
         const newFiles = [...files, ...validProcessedFiles];
-        const total =
-          newFiles.reduce((sum, file) => sum + file.size, 0) / (1024 * 1024);
+        const total = newFiles.reduce((sum, file) => sum + file.size, 0) / (1024 * 1024);
         setFiles(newFiles);
         setTotalSize(total.toFixed(2));
       } catch (err) {
@@ -133,23 +119,19 @@ const Contact = () => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     multiple: true,
-    maxSize: MAX_FILE_SIZE_MB * 1024 * 1024, // 500MB total limit
+    maxSize: MAX_FILE_SIZE_MB * 1024 * 1024,
     accept: { 'image/*': [] },
   });
 
-  // Check if an image was passed from the Home component and convert it to a File object.
   useEffect(() => {
     if (location.state?.attachedImage) {
       const imageURL = location.state.attachedImage;
-      // Avoid duplicate addition if the file is already added
       if (!files.find((f) => f.preview === imageURL)) {
         fetch(imageURL)
           .then((res) => res.blob())
           .then(async (blob) => {
-            // Create a File object from the blob
             const filename = imageURL.split('/').pop();
             const file = new File([blob], filename, { type: blob.type });
-            // Compress and convert the attached image as well
             const options = {
               maxSizeMB: 1,
               maxWidthOrHeight: 1920,
@@ -158,12 +140,10 @@ const Contact = () => {
             };
             try {
               const compressedFile = await imageCompression(file, options);
-              compressedFile.preview = imageURL; // Use original URL for preview if desired
+              compressedFile.preview = imageURL;
               const updatedFiles = [...files, compressedFile];
               setFiles(updatedFiles);
-              const total =
-                updatedFiles.reduce((sum, f) => sum + f.size, 0) /
-                (1024 * 1024);
+              const total = updatedFiles.reduce((sum, f) => sum + f.size, 0) / (1024 * 1024);
               setTotalSize(total.toFixed(2));
             } catch (error) {
               console.error("Failed to compress attached image:", error);
@@ -175,22 +155,17 @@ const Contact = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.state?.attachedImage]);
 
-  // Clean up preview URLs to avoid memory leaks
   useEffect(() => {
     return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
   }, [files]);
 
-  // Remove a file from the preview list
   const handleRemoveFile = (indexToRemove) => {
     const updatedFiles = files.filter((_, index) => index !== indexToRemove);
     setFiles(updatedFiles);
-    const total =
-      updatedFiles.reduce((sum, file) => sum + file.size, 0) /
-      (1024 * 1024);
+    const total = updatedFiles.reduce((sum, file) => sum + file.size, 0) / (1024 * 1024);
     setTotalSize(total.toFixed(2));
   };
 
-  // Submit the form
   const handleSubmit = async (e) => {
     e.preventDefault();
     const errors = {};
@@ -216,7 +191,8 @@ const Contact = () => {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
-      alert(response.data.message);
+      // Save the email before clearing formData
+      setSubmittedEmail(formData.email);
 
       // Clear the form after successful submission
       setFormData({
@@ -229,6 +205,9 @@ const Contact = () => {
       setFiles([]);
       setTotalSize(0);
       setFormErrors({});
+
+      // Show confirmation modal
+      setShowConfirmationModal(true);
     } catch (error) {
       console.error('Error submitting:', error);
       alert('There was an error sending your message.');
@@ -246,7 +225,6 @@ const Contact = () => {
           <>
             <h2 className="form-title">Schedule Appointment</h2>
             <form className="contact-form" onSubmit={handleSubmit}>
-              {/* Name Input */}
               <label>Name</label>
               <input
                 ref={inputRefs.name}
@@ -257,7 +235,6 @@ const Contact = () => {
                 onKeyDown={(e) => handleKeyDown(e, 'name')}
               />
 
-              {/* Email Input */}
               <label>Email</label>
               <input
                 ref={inputRefs.email}
@@ -270,7 +247,6 @@ const Contact = () => {
                 onKeyDown={(e) => handleKeyDown(e, 'email')}
               />
 
-              {/* Phone Input with Country Code */}
               <label>Phone Number</label>
               <div className="phone-container">
                 <select
@@ -296,7 +272,6 @@ const Contact = () => {
                 />
               </div>
 
-              {/* Description Input */}
               <label>Description of Tattoo</label>
               <textarea
                 ref={inputRefs.description}
@@ -307,13 +282,10 @@ const Contact = () => {
                 onKeyDown={(e) => handleKeyDown(e, 'description')}
               />
 
-              {/* File Upload Section */}
               <label>Reference Images (Max 5 files, Total 500MB)</label>
               <div
                 {...getRootProps()}
-                className={`file-dropzone-modern ${
-                  isDragActive ? 'active' : ''
-                }`}
+                className={`file-dropzone-modern ${isDragActive ? 'active' : ''}`}
               >
                 <input {...getInputProps()} />
                 {files.length > 0 ? (
@@ -331,7 +303,7 @@ const Contact = () => {
                               <button
                                 type="button"
                                 onClick={(e) => {
-                                  e.stopPropagation(); // Prevent dropzone click
+                                  e.stopPropagation();
                                   handleRemoveFile(index);
                                 }}
                                 className="remove-image-btn"
@@ -342,21 +314,17 @@ const Contact = () => {
                           </div>
                           <div className="preview-info">
                             <p>{file.name}</p>
-                            <p>
-                              {(file.size / (1024 * 1024)).toFixed(2)} MB
-                            </p>
+                            <p>{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
                           </div>
                         </div>
                       ))}
                     </div>
-                    {/* Optionally, include a progress bar or size info here */}
                   </>
                 ) : (
                   <p>Click or drag up to 5 images here to upload.</p>
                 )}
               </div>
 
-              {/* Submit Button */}
               <button type="submit" className="submit-button" disabled={loading}>
                 Submit
               </button>
@@ -364,6 +332,19 @@ const Contact = () => {
           </>
         )}
       </div>
+
+      {showConfirmationModal && (
+        <div className="confirmation-modal">
+          <div className="confirmation-modal-content">
+            <h2>Confirmation Email Sent</h2>
+            <p>
+              A confirmation email has been sent to <strong>{submittedEmail}</strong>.
+              If you do not receive the email within 5 minutes, please try again.
+            </p>
+            <button onClick={() => setShowConfirmationModal(false)}>Close</button>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
