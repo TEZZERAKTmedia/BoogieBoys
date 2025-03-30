@@ -17,18 +17,25 @@ const registerContactRoutes = require('./routes/register/contactRoutes');
 const app = express();
 
 // CORS setup
-const allowedOrigins =
-  process.env.NODE_ENV === 'production' ? [] : [
-    process.env.USER_FRONTEND, 
-    process.env.ADMIN_FRONTEND, 
-    process.env.REGISTER_FRONTEND, 
-    
-  ];
+const allowedOrigins = process.env.NODE_ENV === 'production'
+  ? [
+      process.env.PROD_USER_FRONTEND,
+      process.env.PROD_ADMIN_FRONTEND,
+      process.env.PROD_REGISTER_FRONTEND
+    ]
+  : [
+      process.env.USER_FRONTEND,
+      process.env.ADMIN_FRONTEND,
+      process.env.REGISTER_FRONTEND
+    ];
 
-if (process.env.NODE_ENV !== 'production') {
-  app.use(cors({ origin: allowedOrigins, methods: ['GET', 'POST'], credentials: true }));
-  console.log('CORS middleware enabled for development');
-}
+
+    
+    app.use(cors({
+      origin: allowedOrigins,
+      credentials: true,
+    }));
+    
 
 // Security middleware
 app.use(

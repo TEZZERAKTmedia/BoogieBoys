@@ -338,10 +338,10 @@ const Contact = () => {
           <div className="confirmation-modal-content">
             <h2>Confirmation Email Sent</h2>
             <p>
-              A confirmation email has been sent to <strong>{submittedEmail}</strong>.
+              A confirmation email has been sent to <strong>{submittedEmail}</strong><br />
               If you do not receive the email within 5 minutes, please try again.
             </p>
-            <button onClick={() => setShowConfirmationModal(false)}>Close</button>
+            <button className="verify-email-btn" onClick={() => setShowConfirmationModal(false)}>Close</button>
           </div>
         </div>
       )}
