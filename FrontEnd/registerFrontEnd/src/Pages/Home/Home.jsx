@@ -12,6 +12,7 @@ import G3 from '../../assets/3x6.webp';
 import G4 from '../../assets/4x6.webp';
 import G5 from '../../assets/5x6.webp';
 import G6 from '../../assets/6x6.webp';
+import Address from './address';
 
 const Home = () => {
   const scrollContainerRef = useRef(null);
@@ -44,12 +45,14 @@ const Home = () => {
           <p className="hero-description">
             Every tattoo from jonny.tatu is done with a specialized single needle ensuring that our clients get the finest lines and the highest precision.
           </p>
+          <Address />
+              
           <Link to="/contact" className="hero-btn">
            Schedule an Appointment
           </Link>
         </div>
       </motion.section>
-
+      
       {/* Parallax Section */}
       <motion.section className="parallax-section">
         <motion.img
